@@ -6,6 +6,7 @@
 package utilisateurs.modeles;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,28 @@ public class Utilisateurs implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    
+    @Column(nullable = false)
+    private String firstname;
+    
+    @Column(nullable = false)
+    private String lastname;
+    
+    @Column(unique = true, nullable = false)
+    private String adresseMail;
+    
+    @Column(nullable = false)
+    private String password;
+    
+    public Utilisateurs() {
+    }
+
+    public Utilisateurs(final String adresseMail, final String lastname, final String firstname, final String password) {
+        this.adresseMail = adresseMail;
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.password = password;
+    }    
 
     public int getId() {
         return id;
@@ -30,6 +53,38 @@ public class Utilisateurs implements Serializable {
         this.id = id;
     }
 
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getAdresseMail() {
+        return adresseMail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setAdresseMail(String adresseMail) {
+        this.adresseMail = adresseMail;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
