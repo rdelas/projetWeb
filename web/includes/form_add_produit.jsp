@@ -14,7 +14,6 @@
             <label for="cp">Code postal : </label><input type="number" name="cp" required/><br>
             <label for="description">Description : </label><input type="text" name="description" required/><br>
             <label for="tel">Téléphone : </label><input type="tel" name="tel"/><br>
-            <label for="mail">Adresse mail : </label><input type="email" name="mail"/><br>
             <input type="hidden" name="action" value="${param.action}"/>
             <input type="submit" value="${param.btnLabel}" name="submit" class="bouton"/>
         </form>

@@ -6,6 +6,7 @@
 package model.produit;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +22,84 @@ public class Produit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @Column(nullable = false)
+    private String firstname;
+    
+    @Column(nullable = false)
+    private float prix;
+    
+    @Column(nullable = false)
+    private String ville;
+    
+    @Column(nullable = false)
+    private int cp;
+    
+    @Column(nullable = false)
+    private String description;
+    
+    @Column(nullable = false)
+    private int tel;
 
+    public Produit() {
+    }
+
+    public Produit(final String firstname, final float prix, final int cp, final String description, final int tel) {
+        this.firstname = firstname;
+        this.prix = prix;
+        this.cp = cp;
+        this.description = description;
+        this.tel = tel;
+    } 
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public float getPrix() {
+        return prix;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public int getCp() {
+        return cp;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getTel() {
+        return tel;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setPrix(float prix) {
+        this.prix = prix;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public void setCp(int cp) {
+        this.cp = cp;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setTel(int tel) {
+        this.tel = tel;
+    }
+    
     public Long getId() {
         return id;
     }
