@@ -9,9 +9,9 @@
 <nav id="menu">
     <h2 id="titreMenu">Menu</h2>
     <ul>
-        <li class="liMenu"><a href="#afficheModalModif">Modifier les détails d'un utilisateur</a></li>
-        <li class="liMenu"><a href="#" onclick="return getUserList(1);">Afficher tous les utilisateurs</a></li>
-        <li class="liMenu"><a href="#afficheModalDetail">Afficher les détails d'un utilisateur</a></li>
-        <li class="liMenu"><a href="ServletUsers?action=creerUtilisateursDeTest">Créer des utilisateurs de test</a></li>
+        <li class="liMenu"><a href="">Accueil</a></li>
+        <li class="liMenu"><a href="">Ajouter une annonce</a></li>
+        <li class="liMenu"><a href="">Voir toutes les annonces publiées</a></li>
+        <li class="liMenu"><a href="">Compte</a></li>
     </ul>
 </nav>
