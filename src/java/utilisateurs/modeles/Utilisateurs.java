@@ -99,10 +99,7 @@ public class Utilisateurs implements Serializable {
             return false;
         }
         Utilisateurs other = (Utilisateurs) object;
-        if (this.id != other.id) {
-            return false;
-        }
-        return true;
+        return this.id == other.id;
     }
 
     @Override
