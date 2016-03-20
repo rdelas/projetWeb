@@ -29,7 +29,7 @@
                 <c:otherwise>
                     <div id="headerLogin">
                         <form action="ServletUsers" method="post" id="loginForm">
-                            Adresse mail : <input type="text" name="login" minlength="3" title="3 caracteres minimum"/>
+                            Adresse mail : <input type="email" name="adresseMail" minlength="3" title="3 caracteres minimum"/>
                             Password : <input type="password" name="password" minlength="8" title="8 caracteres minimum"/>
                             <!-- Astuce pour passer des paramètres à une servlet depuis un formulaire JSP !-->
                             <input type="hidden" name="action" value="connect"/>

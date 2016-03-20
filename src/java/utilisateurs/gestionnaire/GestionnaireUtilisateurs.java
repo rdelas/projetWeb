@@ -21,8 +21,8 @@ public class GestionnaireUtilisateurs {
         creeUtilisateur("Georges", "Harisson", "georgesH", "pwd");
     }
 
-    public Utilisateurs creeUtilisateur(final String nom, final String prenom, final String mail, final String password) {
-        Utilisateurs u = new Utilisateurs(mail, nom, prenom, password);
+    public Utilisateurs creeUtilisateur(final String nom, final String prenom, final String adresseMail, final String password) {
+        Utilisateurs u = new Utilisateurs(adresseMail, nom, prenom, password);
         em.persist(u);
         return u;
     }
