@@ -1,11 +1,11 @@
-package utilisateurs.gestionnaire;
+package gestionnaires.utilisateurs;
 
 import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import utilisateurs.modeles.Utilisateurs;
+import model.utilisateurs.Utilisateurs;
 
 @Stateless
 public class GestionnaireUtilisateurs {

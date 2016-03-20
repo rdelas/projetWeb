@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package utilisateurs.modeles;
+package model.utilisateurs;
 
 import java.io.Serializable;
 import javax.persistence.Column;
