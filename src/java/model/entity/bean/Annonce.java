@@ -12,7 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -48,8 +49,8 @@ public class Annonce implements Serializable {
     @Column(nullable = false)
     private Double prix;
     
-    @OneToMany
-    @Column(nullable = false)
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private Utilisateur utilisateur;
 
     public Annonce() {

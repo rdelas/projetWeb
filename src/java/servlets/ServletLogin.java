@@ -13,8 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import gestionnaires.utilisateurs.GestionnaireUtilisateurs;
-import model.utilisateurs.Utilisateurs;
+import model.entity.bean.Utilisateur;
+import model.entity.services.UtilisateurServices;
 import utils.StringUtil;
 
 /**
@@ -25,7 +25,7 @@ import utils.StringUtil;
 public class ServletLogin extends HttpServlet {
 
     @EJB
-    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
+    private UtilisateurServices userServices;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -75,7 +75,7 @@ public class ServletLogin extends HttpServlet {
         String password = request.getParameter("password");
         
         if(!StringUtil.isEmptyTrim(adresseMail) && !StringUtil.isEmptyTrim(password)){
-            Utilisateurs user = gestionnaireUtilisateurs.getUserByMail(adresseMail);
+            Utilisateur user = userServices.getUserByMail(adresseMail);
             if(user != null && user.getPassword().equals(password)){
                 request.getSession().setAttribute("user", user);
             }
