@@ -1,14 +1,14 @@
-package gestionnaires.utilisateurs;
+package model.entity.services;
 
 import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import model.utilisateurs.Utilisateurs;
+import model.entity.bean.Utilisateur;
 
 @Stateless
-public class GestionnaireUtilisateurs {
+public class UtilisateurServices {
     // Ici injection de code : on n'initialise pas. L'entity manager sera créé
     // à partir du contenu de persistence.xml
     @PersistenceContext
@@ -21,21 +21,21 @@ public class GestionnaireUtilisateurs {
         creeUtilisateur("Georges", "Harisson", "georgesH", "pwd");
     }
 
-    public Utilisateurs creeUtilisateur(final String nom, final String prenom, final String mail, final String password) {
-        Utilisateurs u = new Utilisateurs(mail, nom, prenom, password);
+    public Utilisateur creeUtilisateur(final String nom, final String prenom, final String mail, final String password) {
+        Utilisateur u = new Utilisateur(mail, nom, prenom, password);
         em.persist(u);
         return u;
     }
 
-    public Collection<Utilisateurs> getAllUsers() {
+    public Collection<Utilisateur> getAllUsers() {
         // Exécution d'une requête équivalente à un select *
-        Query q = em.createQuery("select u from Utilisateurs u");
+        Query q = em.createQuery("select u from Utilisateur u");
         return q.getResultList();
     }
     
-    public Collection<Utilisateurs> getUsersPaginated(final int page, final int pageSize) {
+    public Collection<Utilisateur> getUsersPaginated(final int page, final int pageSize) {
         // Exécution d'une requête équivalente à un select *
-        Query q = em.createQuery("select u from Utilisateurs u")
+        Query q = em.createQuery("select u from Utilisateur u")
                 .setFirstResult((page-1) * pageSize)
                 .setMaxResults(pageSize);
 
@@ -44,7 +44,7 @@ public class GestionnaireUtilisateurs {
 
     public void updateUser(final int id, final String nom, final String prenom, final String adresseMail){
         
-        Utilisateurs u = em.find(Utilisateurs.class, id);
+        Utilisateur u = em.find(Utilisateur.class, id);
         
         u.setFirstname(prenom);
         u.setLastname(nom);
@@ -52,9 +52,9 @@ public class GestionnaireUtilisateurs {
         
     }
     
-    public Utilisateurs getUserByMail(final String adresseMail) {
+    public Utilisateur getUserByMail(final String adresseMail) {
         // Exécution d'une requête équivalente à un select *
-        Query q = em.createQuery("select u from Utilisateurs u WHERE u.adresseMail=:adresseMail");
+        Query q = em.createQuery("select u from Utilisateur u WHERE u.adresseMail=:adresseMail");
         q.setParameter("adresseMail", adresseMail);
         
         Object o = null;
@@ -63,7 +63,7 @@ public class GestionnaireUtilisateurs {
         } catch (Exception e){
             System.err.println("No Result for adresse mail : " + adresseMail);
         }finally{
-            return (o!=null)?(Utilisateurs)o:null;
+            return (o!=null)?(Utilisateur)o:null;
         }
     }
 }

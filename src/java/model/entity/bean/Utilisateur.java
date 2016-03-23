@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.utilisateurs;
+package model.entity.bean;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.Id;
  * @author Clem
  */
 @Entity
-public class Utilisateurs implements Serializable {
+public class Utilisateur implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,10 +35,10 @@ public class Utilisateurs implements Serializable {
     @Column(nullable = false)
     private String password;
     
-    public Utilisateurs() {
+    public Utilisateur() {
     }
 
-    public Utilisateurs(final String adresseMail, final String lastname, final String firstname, final String password) {
+    public Utilisateur(final String adresseMail, final String lastname, final String firstname, final String password) {
         this.adresseMail = adresseMail;
         this.lastname = lastname;
         this.firstname = firstname;
@@ -95,10 +95,10 @@ public class Utilisateurs implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Utilisateurs)) {
+        if (!(object instanceof Utilisateur)) {
             return false;
         }
-        Utilisateurs other = (Utilisateurs) object;
+        Utilisateur other = (Utilisateur) object;
         return this.id == other.id;
     }
 

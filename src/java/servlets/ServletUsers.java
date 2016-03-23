@@ -14,8 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import gestionnaires.utilisateurs.GestionnaireUtilisateurs;
-import model.utilisateurs.Utilisateurs;
+import model.entity.services.UtilisateurServices;
+import model.entity.bean.Utilisateur;
 import utils.StringUtil;
 
 /**
@@ -26,7 +26,7 @@ import utils.StringUtil;
 public class ServletUsers extends HttpServlet {
 
     @EJB
-    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
+    private UtilisateurServices gestionnaireUtilisateurs;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,7 +54,7 @@ public class ServletUsers extends HttpServlet {
                     }
                 case "listerLesUtilisateurs":
                     {
-                        Collection<Utilisateurs> liste = gestionnaireUtilisateurs.getAllUsers();
+                        Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
                         request.setAttribute("listeDesUsers", liste);
                         forwardTo = "index.jsp?action=listerLesUtilisateurs";
                         message = "Liste des utilisateurs";
@@ -63,7 +63,7 @@ public class ServletUsers extends HttpServlet {
                 case "creerUtilisateursDeTest":
                     {
                         gestionnaireUtilisateurs.creerUtilisateursDeTest();
-                        Collection<Utilisateurs> liste = gestionnaireUtilisateurs.getAllUsers();
+                        Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
                         request.setAttribute("listeDesUsers", liste);
                         forwardTo = "index.jsp?action=listerLesUtilisateurs";
                         message = "Liste des utilisateurs";
@@ -76,8 +76,8 @@ public class ServletUsers extends HttpServlet {
                         String adresseMail = request.getParameter("adresseMail");                        
                         String pwd = request.getParameter("password");
                         
-                        Utilisateurs u = gestionnaireUtilisateurs.creeUtilisateur(nom, prenom, adresseMail, pwd);
-                        Collection<Utilisateurs> liste = gestionnaireUtilisateurs.getAllUsers();
+                        Utilisateur u = gestionnaireUtilisateurs.creeUtilisateur(nom, prenom, adresseMail, pwd);
+                        Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
                         request.setAttribute("listeDesUsers", liste);
                         forwardTo = "index.jsp?action=listerLesUtilisateurs";
                         message = "Ajout d'un utilisateur";
@@ -88,9 +88,9 @@ public class ServletUsers extends HttpServlet {
                         String nom = request.getParameter("nom");
                         String prenom = request.getParameter("prenom");
                         String adresseMail = request.getParameter("adresseMail");
-                        Utilisateurs u = gestionnaireUtilisateurs.getUserByMail(adresseMail);
+                        Utilisateur u = gestionnaireUtilisateurs.getUserByMail(adresseMail);
                         gestionnaireUtilisateurs.updateUser(u.getId(), nom, prenom, adresseMail);
-                        Collection<Utilisateurs> liste = gestionnaireUtilisateurs.getAllUsers();
+                        Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
                         request.setAttribute("listeDesUsers", liste);
                         forwardTo = "index.jsp?action=listerLesUtilisateurs";
                         message = "Modification de l'utilisateur "+adresseMail;

@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gestionnaires.produit;
+package model.entity.bean;
 
 /**
  *
  * @author Delas
  */
-public class ProduitServices {
-    
+public enum CateAnnonce {
+    VEHICULE,
+    MULTIMEDIA,
+    MEUBLE,
+    VETEMENTS;
 }
