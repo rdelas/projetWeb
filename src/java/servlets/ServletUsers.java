@@ -74,10 +74,9 @@ public class ServletUsers extends HttpServlet {
                         String nom = request.getParameter("nom");
                         String prenom = request.getParameter("prenom");
                         String adresseMail = request.getParameter("adresseMail");                        
-                        String pwd = request.getParameter("password");
-                        
-                        Utilisateur u = gestionnaireUtilisateurs.creeUtilisateur(nom, prenom, adresseMail, pwd);
-                        Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
+                        String pwd = request.getParameter("password");                        
+                        Utilisateurs u = gestionnaireUtilisateurs.creeUtilisateur(nom, prenom, adresseMail, pwd);
+                        Collection<Utilisateurs> liste = gestionnaireUtilisateurs.getAllUsers();
                         request.setAttribute("listeDesUsers", liste);
                         forwardTo = "index.jsp?action=listerLesUtilisateurs";
                         message = "Ajout d'un utilisateur";
