@@ -13,5 +13,6 @@ public enum CateAnnonce {
     VEHICULE,
     MULTIMEDIA,
     MEUBLE,
-    VETEMENTS;
+    VETEMENT,
+    MUSIQUE;
 }
