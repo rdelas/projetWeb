@@ -52,11 +52,14 @@ public class Annonce implements Serializable {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Utilisateur utilisateur;
+    
+    @Column(nullable = false)
+    private int telephone;
 
     public Annonce() {
     }
 
-    public Annonce(String titre, String description, CateAnnonce categorie, String photoUrl, Date dateDepot, Date dateFin, Double prix, Utilisateur utilisateur) {
+    public Annonce(String titre, String description, CateAnnonce categorie, String photoUrl, Date dateDepot, Date dateFin, Double prix, Utilisateur utilisateur, int telephone) {
         this.titre = titre;
         this.description = description;
         this.categorie = categorie;
@@ -65,6 +68,7 @@ public class Annonce implements Serializable {
         this.dateFin = dateFin;
         this.prix = prix;
         this.utilisateur = utilisateur;
+        this.telephone = telephone;
     }
         
 
@@ -140,7 +144,13 @@ public class Annonce implements Serializable {
         this.utilisateur = utilisateur;
     }
 
-    
+    public int getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(int telephone) {
+        this.telephone = telephone;
+    }
     
     @Override
     public int hashCode() {

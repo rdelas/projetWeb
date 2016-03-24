@@ -6,12 +6,18 @@
 
 <%@include file="header.jsp" %>
     <fieldset>
-        <legend>Ajouter un produit à vendre</legend>
+        <legend>Ajouter une annonce</legend>
         <form action="ServletUsers" method="post">
-            <label for="nomProduit">Nom du produit: </label><input type="text" name="nomProduit" required/><br>
+            <label for="titre">Titre : </label><input type="text" name="titre" required/><br>
             <label for="prix">Prix : </label><input type="number" name="prix" id="prenom" required/><br>
-            <label for="ville">Ville : </label><input type="text" name="ville" required/><br>    
-            <label for="cp">Code postal : </label><input type="number" name="cp" required/><br>
+            <label for="categorie"> Catégorie : </label>
+            <select name="listCat" size="1">
+                <option>Vehicule
+                <option>Musique
+                <option>Vêtement
+                <option>Meuble
+                <option>Multimédia
+            </select>
             <label for="description">Description : </label><input type="text" name="description" required/><br>
             <label for="tel">Téléphone : </label><input type="tel" name="tel"/><br>
             <input type="hidden" name="action" value="${param.action}"/>
