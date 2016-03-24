@@ -1,6 +1,11 @@
 package model.entity.services;
 
+import com.delas.common.tools.password.PasswordUtils;
+import com.delas.common.tools.string.StringUtil;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -65,5 +70,25 @@ public class UtilisateurServices {
         }finally{
             return (o!=null)?(Utilisateur)o:null;
         }
+    }
+    
+    public boolean checkUserPwd(final Utilisateur u, final String password){
+        if(u == null)
+            return false;
+        
+        byte[] salt = u.getSalt();
+        String pwdToTest = null;
+        try {
+            pwdToTest = PasswordUtils.encryptStringWithSalt(password, salt);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UtilisateurServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(StringUtil.isEmpty(pwdToTest))
+            return false;
+        
+        String pwd = u.getPassword();
+        
+        return pwd.equals(pwdToTest);
     }
 }

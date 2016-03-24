@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.entity.bean.Utilisateur;
 import model.entity.services.UtilisateurServices;
-import utils.StringUtil;
+import com.delas.common.tools.string.StringUtil;
 
 /**
  *
@@ -76,7 +76,7 @@ public class ServletLogin extends HttpServlet {
         
         if(!StringUtil.isEmptyTrim(adresseMail) && !StringUtil.isEmptyTrim(password)){
             Utilisateur user = userServices.getUserByMail(adresseMail);
-            if(user != null && user.getPassword().equals(password)){
+            if(user != null && userServices.checkUserPwd(user, password)){
                 request.getSession().setAttribute("user", user);
             }
         }

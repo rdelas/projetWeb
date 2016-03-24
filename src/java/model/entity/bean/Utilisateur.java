@@ -5,14 +5,23 @@
  */
 package model.entity.bean;
 
+import com.delas.common.tools.password.PasswordUtils;
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -36,7 +45,14 @@ public class Utilisateur implements Serializable {
     
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private byte[] salt;
     
+    @Column(nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateCreation;
+        
     @OneToMany
     private List<Annonce> annonces;
     
@@ -44,10 +60,18 @@ public class Utilisateur implements Serializable {
     }
 
     public Utilisateur(final String adresseMail, final String lastname, final String firstname, final String password) {
-        this.adresseMail = adresseMail;
-        this.lastname = lastname;
-        this.firstname = firstname;
-        this.password = password;
+        try {
+            this.adresseMail = adresseMail;
+            this.lastname = lastname;
+            this.firstname = firstname;
+            final Random r = new SecureRandom();
+            this.salt = new byte[64];
+            r.nextBytes(salt);
+            this.password = PasswordUtils.encryptStringWithSalt(password, salt);
+            this.dateCreation = Calendar.getInstance().getTime();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
 
     public int getId() {
@@ -74,6 +98,14 @@ public class Utilisateur implements Serializable {
         return password;
     }
 
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
+    }
+    
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
@@ -88,6 +120,22 @@ public class Utilisateur implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(Date dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
+    public List<Annonce> getAnnonces() {
+        return annonces;
+    }
+
+    public void setAnnonces(List<Annonce> annonces) {
+        this.annonces = annonces;
     }
     
     @Override
