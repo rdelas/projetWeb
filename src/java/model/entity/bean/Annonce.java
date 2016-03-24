@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,6 +24,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class Annonce implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,6 +37,7 @@ public class Annonce implements Serializable {
     private String description;
     
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private CateAnnonce categorie;
     
     private String photoUrl;
@@ -54,12 +58,12 @@ public class Annonce implements Serializable {
     private Utilisateur utilisateur;
     
     @Column(nullable = false)
-    private int telephone;
+    private String telephone;
 
     public Annonce() {
     }
 
-    public Annonce(String titre, String description, CateAnnonce categorie, String photoUrl, Date dateDepot, Date dateFin, Double prix, Utilisateur utilisateur, int telephone) {
+    public Annonce(String titre, String description, CateAnnonce categorie, String photoUrl, Date dateDepot, Date dateFin, Double prix, Utilisateur utilisateur, String telephone) {
         this.titre = titre;
         this.description = description;
         this.categorie = categorie;
@@ -144,11 +148,11 @@ public class Annonce implements Serializable {
         this.utilisateur = utilisateur;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
     

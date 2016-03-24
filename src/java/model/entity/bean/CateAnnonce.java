@@ -9,10 +9,20 @@ package model.entity.bean;
  *
  * @author Delas
  */
-public enum CateAnnonce {
-    VEHICULE,
-    MULTIMEDIA,
-    MEUBLE,
-    VETEMENT,
-    MUSIQUE;
+public enum CateAnnonce {      
+    VEHICULE("Vehicule"),
+    MULTIMEDIA("Multimedia"),
+    MEUBLE("Meuble"),
+    VETEMENT("Vetement"),
+    MUSIQUE("Musique");
+    
+    private String name;
+    
+    private CateAnnonce(final String name) {
+        this.name = name;
+    }
+    
+    private String getName() {
+        return name;
+    }
 }

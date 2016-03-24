@@ -26,7 +26,7 @@ public class AnnonceServices {
     @PersistenceContext
     private EntityManager em;
 
-    public Annonce createAnnonce(final String titre, final String description, final CateAnnonce categorie, final String photoUrl, final Double prix, Utilisateur utilisateur, int telephone) {
+    public Annonce createAnnonce(final String titre, final String description, final CateAnnonce categorie, final String photoUrl, final Double prix, Utilisateur utilisateur, String telephone) {
         Calendar c = Calendar.getInstance();
         Date dateDepot = c.getTime();
         c.add(Calendar.MONTH, 6);
@@ -34,6 +34,16 @@ public class AnnonceServices {
 
         Annonce a = new Annonce(titre, description, categorie, photoUrl, dateDepot, dateFin, prix, utilisateur, telephone);
         em.persist(a);
+        return a;
+    }
+    
+    public Annonce updateAnnonce(final Long idAnnonce, final int idUser){
+        
+        Annonce a = em.find(Annonce.class, idAnnonce);
+        Utilisateur u = em.find(Utilisateur.class, idUser);
+        
+        a.setUtilisateur(u);
+        
         return a;
     }
 

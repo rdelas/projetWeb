@@ -15,3 +15,9 @@
         <li class="liMenu"><a href="">Compte</a></li>
     </ul>
 </nav>
+
+<jsp:include page="form_add_annonce.jsp">  
+    <jsp:param name="title" value="Ajouter une annonce" />                
+    <jsp:param name="btnLabel" value="Enregistrer" />
+    <jsp:param name="action" value="creerUneAnnonce" />
+</jsp:include>
