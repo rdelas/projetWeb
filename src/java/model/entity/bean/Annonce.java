@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
@@ -33,6 +34,7 @@ public class Annonce implements Serializable {
     @Column(nullable = false)
     private String titre;
     
+    @Lob
     @Column(nullable = false)
     private String description;
     

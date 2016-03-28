@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlets;
+package view.servlet;
 
 import java.io.IOException;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +17,7 @@ import model.entity.bean.Annonce;
 import model.entity.bean.CateAnnonce;
 import model.entity.bean.Utilisateur;
 import model.entity.services.AnnonceServices;
+import view.servlet.validator.AnnonceValidator;
 
 /**
  *
@@ -26,6 +28,9 @@ public class ServletAnnonce extends HttpServlet {
 
     @EJB
     private AnnonceServices annonceServices;
+    
+    @EJB
+    private AnnonceValidator validator;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,16 +44,8 @@ public class ServletAnnonce extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String titre = request.getParameter("titre");
-        String description = request.getParameter("description");
-        String cate = request.getParameter("categorie");
-        CateAnnonce categorie = CateAnnonce.valueOf(cate.toUpperCase());
-        String photoUrl = request.getParameter("photoUrl");
-        Double prix = Double.parseDouble(request.getParameter("prix"));
-        Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");
-        String telephone = request.getParameter("tel");
-        Annonce a = annonceServices.createAnnonce(titre, description, categorie, photoUrl, prix, utilisateur, telephone);
-        annonceServices.updateAnnonce(a.getId(), utilisateur.getId());
+        RequestDispatcher dp = request.getRequestDispatcher("includes/form_add_annonce.jsp");
+        dp.forward(request, response);
     }
 
 
@@ -78,7 +75,25 @@ public class ServletAnnonce extends HttpServlet {
     @Override
         protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        if(!validator.validate(request, response)){
+            request.setAttribute("errors", validator.getErrors());
+            processRequest(request, response);
+            return;
+        } 
+        
+        
+        
+        String titre = request.getParameter("titre");
+        String description = request.getParameter("description");
+        String cate = request.getParameter("categorie");
+        CateAnnonce categorie = CateAnnonce.valueOf(cate.toUpperCase());
+        String photoUrl = request.getParameter("photoUrl");
+        Double prix = Double.parseDouble(request.getParameter("prix"));
+        Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");
+        String telephone = request.getParameter("tel");
+        Annonce a = annonceServices.createAnnonce(titre, description, categorie, photoUrl, prix, utilisateur, telephone);
+        annonceServices.updateAnnonce(a.getId(), utilisateur.getId());
     }
 
     /**
