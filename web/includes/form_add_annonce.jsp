@@ -5,23 +5,32 @@
 --%>
 
 <%@include file="header.jsp" %>
-    <fieldset>
-        <legend>Ajouter une annonce</legend>
-        <form action="ServletAnnonce" method="post">
-            <label for="titre">Titre : </label><input type="text" name="titre" required/><br>
-            <label for="prix">Prix : </label><input type="number" name="prix" required/><br>
-            <label for="categorie"> Catégorie : </label>
-            <select name="categorie" size="1">
-                <option>Vehicule
-                <option>Musique
-                <option>Vêtement
-                <option>Meuble
-                <option>Multimédia
-            </select>
-            <label for="description">Description : </label><input type="text" name="description" required/><br>
-            <label for="tel">Téléphone : </label><input type="tel" name="tel"/><br>
-            <label for="phptoUrl">Photo : </label><input type="phptoUrl" name="tel"/><br>
-            <input type="hidden" name="action" value="${param.action}"/>
-            <input type="submit" value="${param.btnLabel}" name="submit" class="bouton"/>
-        </form>
-    </fieldset>
+<fieldset>
+    <legend>Ajouter une annonce</legend>
+    <form action="ServletAnnonce" method="post">
+        <label for="titre">Titre : </label><input type="text" id="titre" name="titre" required/><br/>
+        <label for="prix">Prix : </label><input type="number" id="prix" name="prix" step="any" required/><br/>
+        <label for="categorie"> Catégorie : </label>
+        <select id="categorie" name="categorie" size="1">
+            <option value="VEHICULE">Vehicule</option>
+            <option value="MUSIQUE">Musique</option>
+            <option value="VETEMENT">Vêtement</option>
+            <option value="MEUBLE">Meuble</option>
+            <option value="MULTIMEDIA">Multimédia</option>
+        </select>
+        <br/>
+        <label for="description">Description : </label>
+        <textarea id="description" name="description" required></textarea><br>
+        <label for="tel">Téléphone : </label><input type="tel" id="tel" name="tel"/><br/>
+        <label for="phptoUrl">Photo : </label><input type="file" id="photoUrl" name="photoUrl"/><br/>
+        <input type="hidden" name="action" value="${param.action}"/>
+        <input type="submit" value="${param.btnLabel}" name="submit" class="bouton"/>
+    </form>
+</fieldset>
+<c:if test="${errors != null}">
+    <ul>
+        <c:forEach items="${errors}" varStatus="status" var="error" >
+            <li>${error.key} : ${error.value}</li>
+        </c:forEach>    
+    </ul>
+</c:if>
