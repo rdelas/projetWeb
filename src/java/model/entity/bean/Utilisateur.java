@@ -50,11 +50,14 @@ public class Utilisateur implements Serializable {
     private byte[] salt;
     
     @Column(nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dateCreation;
         
     @OneToMany
     private List<Annonce> annonces;
+    
+    @OneToMany
+    private List<Telephone> telephones;
     
     public Utilisateur() {
     }
@@ -136,6 +139,14 @@ public class Utilisateur implements Serializable {
 
     public void setAnnonces(List<Annonce> annonces) {
         this.annonces = annonces;
+    }
+
+    public List<Telephone> getTelephones() {
+        return telephones;
+    }
+
+    public void setTelephones(List<Telephone> telephones) {
+        this.telephones = telephones;
     }
     
     @Override

@@ -3,31 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlets;
+package view.servlet;
 
 import java.io.IOException;
-import java.util.Collection;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.entity.bean.Annonce;
-import model.entity.bean.CateAnnonce;
 import model.entity.bean.Utilisateur;
-import model.entity.services.AnnonceServices;
+import model.entity.services.UtilisateurServices;
+import com.delas.common.tools.string.StringUtil;
 
 /**
  *
- * @author Clem
+ * @author rdelas
  */
-@WebServlet(name = "ServletAnnonce", urlPatterns = {"/ServletAnnonce"})
-public class ServletAnnonce extends HttpServlet {
+@WebServlet(name = "ServletLogin", urlPatterns = {"/ServletLogin"})
+public class ServletLogin extends HttpServlet {
 
     @EJB
-    private AnnonceServices annonceServices;
-
+    private UtilisateurServices userServices;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,38 +38,12 @@ public class ServletAnnonce extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String action = request.getParameter("action");
-        String forwardTo = "";
-        String message = "";
-
-        if (action != null) {
-            switch (action) {
-                case "ceerUneAnnonce": {
-                    String titre = request.getParameter("titre");
-                    String description = request.getParameter("description");
-                    String cate = request.getParameter("categorie");
-                    CateAnnonce categorie = CateAnnonce.valueOf(cate.toUpperCase());
-                    String photoUrl = request.getParameter("photoUrl");
-                    Double prix = Double.parseDouble(request.getParameter("prix"));
-                    Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");
-                    String telephone = request.getParameter("tel");
-                    Annonce a = annonceServices.createAnnonce(titre, description, categorie, photoUrl, prix, utilisateur, telephone);
-                    annonceServices.updateAnnonce(a.getId(), utilisateur.getId());
-                    break;
-                }
-                case "listerLesAnnonces": {
-                    Collection<Annonce> liste = annonceServices.getAllAnnonce();
-                    request.setAttribute("listeDesAnnonces", liste);
-                    forwardTo = "index.jsp?action=listerLesAnnonces";
-                    message = "Liste des annonces";
-                    break;
-                }
-            }
-        }
+        
+        RequestDispatcher dp = request.getRequestDispatcher("ServletUsers?action=");
+        dp.forward(request, response);
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -82,6 +55,7 @@ public class ServletAnnonce extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.getSession().removeAttribute("user");
         processRequest(request, response);
     }
 
@@ -96,6 +70,17 @@ public class ServletAnnonce extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String adresseMail = request.getParameter("adresseMail");
+        String password = request.getParameter("password");
+        
+        if(!StringUtil.isEmptyTrim(adresseMail) && !StringUtil.isEmptyTrim(password)){
+            Utilisateur user = userServices.getUserByMail(adresseMail);
+            if(user != null && userServices.checkUserPwd(user, password)){
+                request.getSession().setAttribute("user", user);
+            }
+        }
+        
         processRequest(request, response);
     }
 
