@@ -20,7 +20,7 @@
             </select>
             <label for="description">Description : </label><input type="text" name="description" required/><br>
             <label for="tel">Téléphone : </label><input type="tel" name="tel"/><br>
-            <label for="phptoUrl">Photo : </label><input type="phptoUrl" name="tel"/><br>
+            <label for="phptoUrl">Photo : </label><input type="phptoUrl" name="photo"/><br>
             <input type="hidden" name="action" value="${param.action}"/>
             <input type="submit" value="${param.btnLabel}" name="submit" class="bouton"/>
         </form>

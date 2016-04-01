@@ -6,6 +6,7 @@
 package model.entity.services;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -59,5 +60,18 @@ public class AnnonceServices {
         
         return q.getResultList();
     }
+    
+    public Collection<Annonce> getAllAnnonce() {
+        Query qAnnonce = em.createQuery("select a from Annonce a");
+        return qAnnonce.getResultList();
+    }
+    
+    public Collection<Annonce> getAnnoncePaginated(final int page, final int pageSize) {
+        // Exécution d'une requête équivalente à un select *
+        Query q = em.createQuery("select a from Annonce a")
+                .setFirstResult((page-1) * pageSize)
+                .setMaxResults(pageSize);
 
+        return q.getResultList();
+    }
 }

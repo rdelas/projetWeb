@@ -57,6 +57,10 @@
             </c:otherwise>    
         </c:choose>
 
-
+        <c:if test="${param.action == 'listerLesAnnonces'}" >
+            <jsp:include page="liste_annonce.jsp" >
+                <jsp:param name="listeDesAnnonces" value="${requestScope['listeDesAnnonces']}" />
+            </jsp:include>
+        </c:if>
     </body>
 </html>

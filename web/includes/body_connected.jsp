@@ -11,7 +11,7 @@
     <ul>
         <li class="liMenu"><a href="">Accueil</a></li>
         <li class="liMenu"><a href="">Ajouter une annonce</a></li>
-        <li class="liMenu"><a href="">Voir toutes les annonces publiées</a></li>
+        <li class="liMenu"><a href="#" onclick="return getAnnonceList(1);">Voir toutes les annonces publiées</a></li>
         <li class="liMenu"><a href="">Compte</a></li>
     </ul>
 </nav>
@@ -21,3 +21,9 @@
     <jsp:param name="btnLabel" value="Enregistrer" />
     <jsp:param name="action" value="creerUneAnnonce" />
 </jsp:include>
+
+<c:if test="${param.action == 'listerLesAnnonces'}" >
+    <jsp:include page="list_annonce.jsp" >
+        <jsp:param name="listeDesAnnonces" value="${requestScope['listeDesAnnonces']}" />
+    </jsp:include>
+</c:if>
