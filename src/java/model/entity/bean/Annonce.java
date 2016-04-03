@@ -5,12 +5,14 @@
  */
 package model.entity.bean;
 
+import com.delas.common.tools.object.ClassUtil;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,17 +57,21 @@ public class Annonce implements Serializable {
     @Column(nullable = false)
     private Double prix;
     
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Utilisateur utilisateur;
     
     @Column(nullable = false)
     private String telephone;
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(nullable = false)    
+    private Campus campus;
 
     public Annonce() {
     }
 
-    public Annonce(String titre, String description, CateAnnonce categorie, String photoUrl, Date dateDepot, Date dateFin, Double prix, Utilisateur utilisateur, String telephone) {
+    public Annonce(String titre, String description, CateAnnonce categorie, String photoUrl, Date dateDepot, Date dateFin, Double prix, Utilisateur utilisateur, String telephone, Campus campus) {
         this.titre = titre;
         this.description = description;
         this.categorie = categorie;
@@ -75,8 +81,10 @@ public class Annonce implements Serializable {
         this.prix = prix;
         this.utilisateur = utilisateur;
         this.telephone = telephone;
+        this.campus = campus;
     }
-        
+    
+    
 
     public Long getId() {
         return id;
@@ -157,7 +165,15 @@ public class Annonce implements Serializable {
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
-    
+
+    public Campus getCampus() {
+        return campus;
+    }
+
+    public void setCampus(Campus campus) {
+        this.campus = campus;
+    }
+       
     @Override
     public int hashCode() {
         int hash = 0;
@@ -172,15 +188,13 @@ public class Annonce implements Serializable {
             return false;
         }
         Annonce other = (Annonce) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "produit.model.Produit[ id=" + id + " ]";
+        return ClassUtil.toString(this);
+//        return "produit.model.Produit[ id=" + id + " ]";
     }
     
 }

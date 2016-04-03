@@ -68,7 +68,7 @@ public class ServletAnnoncePaginate extends HttpServlet {
         request.setAttribute("nbPages", nbPage);
         request.setAttribute("currentPage", page);
 
-        RequestDispatcher dp = request.getRequestDispatcher("includes/list_annonce.jsp");
+        RequestDispatcher dp = request.getRequestDispatcher("includes/liste_annonce.jsp");
         dp.forward(request, response);
 //        response.setContentType(MediaType.TEXT_PLAIN);
 //        response.setHeader("Cache-Control", "no-cache");

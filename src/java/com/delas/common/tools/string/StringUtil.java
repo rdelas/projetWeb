@@ -13,7 +13,8 @@ public class StringUtil {
     
     
     public static boolean isEmptyTrim(final String str){
-        return isEmpty(str.trim());
+        
+        return str == null ? true : isEmpty(str.trim());
     }
     
     public static boolean isEmpty(final String str){

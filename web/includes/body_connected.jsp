@@ -27,3 +27,7 @@
         <jsp:param name="listeDesAnnonces" value="${requestScope['listeDesAnnonces']}" />
     </jsp:include>
 </c:if>
+
+<div id="corps" >
+    
+</div>

@@ -7,48 +7,48 @@ package model.entity.bean;
 
 import com.delas.common.tools.object.ClassUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
- * @author rdelas
+ * @author Delas
  */
 @Entity
-public class Telephone implements Serializable {
+public class Campus implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(nullable = false)
-    private String numero;
     
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TelType type;
+    private String nom;
     
     @JoinColumn(nullable = false)
-    @ManyToOne(fetch=FetchType.LAZY)
-    private Utilisateur user;
+    @OneToOne(fetch=FetchType.LAZY)
+    private Adresse adresse;
 
-    public Telephone() {
-    }
-
-    public Telephone(String numero, TelType type, Utilisateur user) {
-        this.numero = numero;
-        this.type = type;
-        this.user = user;
-    }
+    @OneToMany(mappedBy = "campus")
+    private List<Annonce> annonces;
     
+    public Campus() {
+    }
+
+    public Campus(String nom, Adresse adresse) {
+        this.nom = nom;
+        this.adresse = adresse;
+        this.annonces = new ArrayList<>();
+    }
+
     public Long getId() {
         return id;
     }
@@ -57,28 +57,28 @@ public class Telephone implements Serializable {
         this.id = id;
     }
 
-    public String getNumero() {
-        return numero;
+    public String getNom() {
+        return nom;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public TelType getType() {
-        return type;
+    public Adresse getAdresse() {
+        return adresse;
     }
 
-    public void setType(TelType type) {
-        this.type = type;
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
     }
 
-    public Utilisateur getUser() {
-        return user;
+    public List<Annonce> getAnnonces() {
+        return annonces;
     }
 
-    public void setUser(Utilisateur user) {
-        this.user = user;
+    public void setAnnonces(List<Annonce> annonces) {
+        this.annonces = annonces;
     }
 
     @Override
@@ -91,10 +91,10 @@ public class Telephone implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Telephone)) {
+        if (!(object instanceof Campus)) {
             return false;
         }
-        Telephone other = (Telephone) object;
+        Campus other = (Campus) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -104,7 +104,7 @@ public class Telephone implements Serializable {
     @Override
     public String toString() {
         return ClassUtil.toString(this);
-//        return "model.entity.bean.Telephone[ id=" + id + " ]";
+//        return "model.entity.bean.Accademie[ id=" + id + " ]";
     }
     
 }

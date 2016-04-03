@@ -17,6 +17,6 @@ function getAnnonceList(page) {
     };
 
     xhr.send("page=" + page + "&lpageSize=10");
-
+    
     return false;
 }

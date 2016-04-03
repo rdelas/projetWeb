@@ -102,6 +102,7 @@ public class ServletUsers extends HttpServlet {
             }
         }
 
+        
         forwardTo += (!StringUtil.isEmptyTrim(message))?"&message=" + message:"";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
         dp.forward(request, response);

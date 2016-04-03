@@ -5,6 +5,7 @@
  */
 package model.entity.bean;
 
+import com.delas.common.tools.object.ClassUtil;
 import com.delas.common.tools.password.PasswordUtils;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
@@ -30,6 +31,7 @@ import javax.persistence.Temporal;
 @Entity
 public class Utilisateur implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -53,10 +55,10 @@ public class Utilisateur implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dateCreation;
         
-    @OneToMany
+    @OneToMany(mappedBy = "utilisateur")
     private List<Annonce> annonces;
     
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Telephone> telephones;
     
     public Utilisateur() {
@@ -168,7 +170,8 @@ public class Utilisateur implements Serializable {
 
     @Override
     public String toString() {
-        return "utilisateurs.modeles.Utilisateurs[ id=" + id + " ]";
+        return ClassUtil.toString(this);
+//        return "utilisateurs.modeles.Utilisateurs[ id=" + id + " ]";
     }
     
 }

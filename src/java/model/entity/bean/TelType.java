@@ -13,14 +13,15 @@ public enum TelType {
     DOMICILE("Domicile"),
     MOBILE("Mobile"),
     AUTRE("Autre");
-    
+
     private final String value;
     
-    private TelType(final String value){
+    private TelType(String value){
         this.value = value;
     }
-    
-    private String getValue(){
+
+    public String getValue() {
         return value;
     }
+    
 }

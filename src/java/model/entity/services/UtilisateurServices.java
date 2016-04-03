@@ -20,10 +20,10 @@ public class UtilisateurServices {
     private EntityManager em;
 
     public void creerUtilisateursDeTest() {
-        creeUtilisateur("John", "Lennon", "jlennon", "pwd");
-        creeUtilisateur("Paul", "Mac Cartney", "pmc", "pwd");
-        creeUtilisateur("Ringo", "Starr", "rstarr", "pwd");
-        creeUtilisateur("Georges", "Harisson", "georgesH", "pwd");
+        creeUtilisateur("John", "Lennon", "jlennon", "pwd123456789");
+        creeUtilisateur("Paul", "Mac Cartney", "pmc", "pwd123456789");
+        creeUtilisateur("Ringo", "Starr", "rstarr", "pwd123456789");
+        creeUtilisateur("Georges", "Harisson", "georgesH", "pwd123456789");
     }
 
     public Utilisateur creeUtilisateur(final String nom, final String prenom, final String mail, final String password) {

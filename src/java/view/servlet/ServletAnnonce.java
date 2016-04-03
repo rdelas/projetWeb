@@ -8,16 +8,17 @@ package view.servlet;
 import java.io.IOException;
 import java.util.Collection;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.entity.bean.Annonce;
+import model.entity.bean.Campus;
 import model.entity.bean.CateAnnonce;
 import model.entity.bean.Utilisateur;
 import model.entity.services.AnnonceServices;
+import model.entity.services.CampusServices;
 import view.servlet.validator.AnnonceValidator;
 
 /**
@@ -29,9 +30,12 @@ public class ServletAnnonce extends HttpServlet {
 
     @EJB
     private AnnonceServices annonceServices;
-    
+
     @EJB
     private AnnonceValidator validator;
+
+    @EJB
+    private CampusServices campusServices;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -60,8 +64,10 @@ public class ServletAnnonce extends HttpServlet {
                     Double prix = Double.parseDouble(request.getParameter("prix"));
                     Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");
                     String telephone = request.getParameter("tel");
-                    Annonce a = annonceServices.createAnnonce(titre, description, categorie, photoUrl, prix, utilisateur, telephone);
-                    annonceServices.updateAnnonce(a.getId(), utilisateur.getId());
+                    Long campusId = Long.parseLong(request.getParameter("campusID"));
+                    Campus campus = campusServices.findCampusById(campusId);
+//                    Annonce a = annonceServices.createAnnonce(titre, description, categorie, photoUrl, prix, utilisateur, telephone, campus);
+//                    annonceServices.updateAnnonce(a.getId(), utilisateur.getId());
                     break;
                 }
                 case "listerLesAnnonces": {
@@ -101,15 +107,13 @@ public class ServletAnnonce extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        if(!validator.validate(request, response)){
+
+        if (!validator.validate(request, response)) {
             request.setAttribute("errors", validator.getErrors());
             processRequest(request, response);
             return;
-        } 
-        
-        
-        
+        }
+
         String titre = request.getParameter("titre");
         String description = request.getParameter("description");
         String cate = request.getParameter("categorie");
@@ -118,8 +122,9 @@ public class ServletAnnonce extends HttpServlet {
         Double prix = Double.parseDouble(request.getParameter("prix"));
         Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");
         String telephone = request.getParameter("tel");
-        Annonce a = annonceServices.createAnnonce(titre, description, categorie, photoUrl, prix, utilisateur, telephone);
-        annonceServices.updateAnnonce(a.getId(), utilisateur.getId());
+        Long campusId = Long.parseLong(request.getParameter("campusID"));
+        Campus campus = campusServices.findCampusById(campusId);
+        Annonce a = annonceServices.createAnnonce(titre, description, categorie, photoUrl, prix, utilisateur, telephone, campus);
     }
 
     /**
