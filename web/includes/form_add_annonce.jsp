@@ -10,6 +10,7 @@
     <form action="ServletAnnonce" method="post">
         <label for="titre">Titre : </label><input type="text" id="titre" name="titre" required/><br/>
         <label for="prix">Prix : </label><input type="number" id="prix" name="prix" step="any" required/><br/>
+        <label for="campus">Campus : </label><input type="text" id="campus" name="campus" required/><br/>
         <label for="categorie"> Catégorie : </label>
         <select id="categorie" name="categorie" size="1">
             <option value="VEHICULE">Vehicule</option>

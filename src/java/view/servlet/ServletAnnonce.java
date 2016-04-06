@@ -66,8 +66,8 @@ public class ServletAnnonce extends HttpServlet {
                     String telephone = request.getParameter("tel");
                     Long campusId = Long.parseLong(request.getParameter("campusID"));
                     Campus campus = campusServices.findCampusById(campusId);
-//                    Annonce a = annonceServices.createAnnonce(titre, description, categorie, photoUrl, prix, utilisateur, telephone, campus);
-//                    annonceServices.updateAnnonce(a.getId(), utilisateur.getId());
+                    Annonce a = annonceServices.createAnnonce(titre, description, categorie, photoUrl, prix, utilisateur, telephone, campus);
+                    annonceServices.updateAnnonce(a.getId(), utilisateur.getId());
                     break;
                 }
                 case "listerLesAnnonces": {
