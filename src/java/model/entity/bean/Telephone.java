@@ -7,6 +7,7 @@ package model.entity.bean;
 
 import com.delas.common.tools.object.ClassUtil;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -36,17 +37,17 @@ public class Telephone implements Serializable {
     @Enumerated(EnumType.STRING)
     private TelType type;
     
-    @JoinColumn(nullable = false)
-    @ManyToOne(fetch=FetchType.LAZY)
-    private Utilisateur user;
+    @ManyToOne(cascade = {CascadeType.ALL})    
+    private Utilisateur utilisateur;
+    
 
     public Telephone() {
     }
 
-    public Telephone(String numero, TelType type, Utilisateur user) {
+    public Telephone(String numero, TelType type, Utilisateur utilisateur) {
         this.numero = numero;
         this.type = type;
-        this.user = user;
+        this.utilisateur = utilisateur;
     }
     
     public Long getId() {
@@ -73,12 +74,12 @@ public class Telephone implements Serializable {
         this.type = type;
     }
 
-    public Utilisateur getUser() {
-        return user;
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
     }
 
-    public void setUser(Utilisateur user) {
-        this.user = user;
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
     @Override

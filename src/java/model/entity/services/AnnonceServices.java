@@ -35,7 +35,8 @@ public class AnnonceServices {
         Date dateFin = c.getTime();
 
         Annonce a = new Annonce(titre, description, categorie, photoUrl, dateDepot, dateFin, prix, utilisateur);
-        em.persist(a);
+        em.persist(a);        
+        em.flush();
         return a;
     }
 

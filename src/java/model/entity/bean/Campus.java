@@ -7,16 +7,13 @@ package model.entity.bean;
 
 import com.delas.common.tools.object.ClassUtil;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -34,11 +31,8 @@ public class Campus implements Serializable {
     private String nom;
     
     @JoinColumn(nullable = false)
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.ALL}) 
     private Adresse adresse;
-
-    @OneToMany(mappedBy = "campus")
-    private List<Annonce> annonces;
     
     public Campus() {
     }
@@ -46,7 +40,6 @@ public class Campus implements Serializable {
     public Campus(String nom, Adresse adresse) {
         this.nom = nom;
         this.adresse = adresse;
-        this.annonces = new ArrayList<>();
     }
 
     public Long getId() {
@@ -71,14 +64,6 @@ public class Campus implements Serializable {
 
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
-    }
-
-    public List<Annonce> getAnnonces() {
-        return annonces;
-    }
-
-    public void setAnnonces(List<Annonce> annonces) {
-        this.annonces = annonces;
     }
 
     @Override

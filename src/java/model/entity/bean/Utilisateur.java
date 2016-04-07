@@ -50,12 +50,7 @@ public class Utilisateur implements Serializable {
     
     @Column(nullable = false)
     private String password;
-    
-    private String photoUrl;
-    
-    @Column(nullable = false)
-    private String telephone;
-    
+        
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(nullable = false)    
     private Campus campus;
@@ -68,15 +63,16 @@ public class Utilisateur implements Serializable {
     private Date dateCreation;
         
     @OneToMany(mappedBy = "utilisateur")
+    private List<Telephone> telephones;
+    
+    @OneToMany(mappedBy = "utilisateur")
     private List<Annonce> annonces;
     
-    @OneToMany(mappedBy = "user")
-    private List<Telephone> telephones;
     
     public Utilisateur() {
     }
 
-    public Utilisateur(final String adresseMail, final String lastname, final String firstname, final String password, final String telephone, final Campus Campus, final String photoUrl) {
+    public Utilisateur(final String adresseMail, final String lastname, final String firstname, final String password, final Campus campus) {
         try {
             this.adresseMail = adresseMail;
             this.lastname = lastname;
@@ -86,29 +82,11 @@ public class Utilisateur implements Serializable {
             r.nextBytes(salt);
             this.password = PasswordUtils.encryptStringWithSalt(password, salt);
             this.dateCreation = Calendar.getInstance().getTime();
-            this.telephone = telephone;
             this.campus = campus;
-            this.photoUrl = photoUrl;
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE, null, ex);
         }
     }    
-    
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
-    
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
 
     public Campus getCampus() {
         return campus;

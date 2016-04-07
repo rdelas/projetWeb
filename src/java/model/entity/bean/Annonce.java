@@ -8,6 +8,7 @@ package model.entity.bean;
 import com.delas.common.tools.object.ClassUtil;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -57,9 +58,9 @@ public class Annonce implements Serializable {
     @Column(nullable = false)
     private Double prix;
     
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @ManyToOne(cascade = {CascadeType.ALL}) 
     private Utilisateur utilisateur;
+    
     
 
     public Annonce() {

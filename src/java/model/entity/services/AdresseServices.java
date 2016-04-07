@@ -24,6 +24,7 @@ public class AdresseServices {
 
         Adresse a = new Adresse(rue, complement, codePostal, ville, latitude, longitude);
         em.persist(a);
+        em.flush();
         return a;
     }
 

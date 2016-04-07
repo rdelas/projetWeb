@@ -26,6 +26,7 @@ public class TelephoneServices {
         
         Telephone t = new Telephone(numero, type, user);
         em.persist(t);
+        em.flush();
         return t;
     }
     

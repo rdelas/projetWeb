@@ -24,7 +24,8 @@ public class CampusServices {
 
     public Campus createCampus(String nom, Adresse adresse){
         Campus c = new Campus(nom, adresse);
-        em.persist(c);
+        em.persist(c);        
+        em.flush();
         return c;
     }
     

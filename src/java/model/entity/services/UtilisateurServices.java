@@ -27,9 +27,10 @@ public class UtilisateurServices {
         creeUtilisateur("Georges", "Harisson", "georgesH", "pwd123456789");
     }*/
 
-    public Utilisateur creeUtilisateur(final String nom, final String prenom, final String mail, final String password, String telephone, Campus campus, final String photoUrl) {
-        Utilisateur u = new Utilisateur(mail, nom, prenom, password, telephone, campus, photoUrl);
+    public Utilisateur creeUtilisateur(final String nom, final String prenom, final String mail, final String password, Campus campus) {
+        Utilisateur u = new Utilisateur(mail, nom, prenom, password, campus);
         em.persist(u);
+        em.flush();
         return u;
     }
 
@@ -68,9 +69,10 @@ public class UtilisateurServices {
            o = q.getSingleResult(); 
         } catch (Exception e){
             System.err.println("No Result for adresse mail : " + adresseMail);
-        }finally{
-            return (o!=null)?(Utilisateur)o:null;
         }
+            
+        return (o!=null)?(Utilisateur)o:null;
+
     }
     
     public boolean checkUserPwd(final Utilisateur u, final String password){
