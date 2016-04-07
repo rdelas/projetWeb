@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import model.entity.services.UtilisateurServices;
 import model.entity.bean.Utilisateur;
 import com.delas.common.tools.string.StringUtil;
+import model.entity.bean.Campus;
+import model.entity.services.CampusServices;
 
 /**
  *
@@ -27,6 +29,9 @@ public class ServletUsers extends HttpServlet {
 
     @EJB
     private UtilisateurServices userServices;
+    
+    @EJB
+    private CampusServices campusServices;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -60,7 +65,7 @@ public class ServletUsers extends HttpServlet {
                         message = "Liste des utilisateurs";
                         break;
                     }
-                case "creerUtilisateursDeTest":
+               /* case "creerUtilisateursDeTest":
                     {
                         userServices.creerUtilisateursDeTest();
                         Collection<Utilisateur> liste = userServices.getAllUsers();
@@ -68,14 +73,18 @@ public class ServletUsers extends HttpServlet {
                         forwardTo = "index.jsp?action=listerLesUtilisateurs";
                         message = "Liste des utilisateurs";
                         break;
-                    }
+                    }*/
                 case "creerUnUtilisateur":
                     {
                         String nom = request.getParameter("nom");
                         String prenom = request.getParameter("prenom");
                         String adresseMail = request.getParameter("adresseMail");                        
-                        String pwd = request.getParameter("password");                        
-                        Utilisateur u = userServices.creeUtilisateur(nom, prenom, adresseMail, pwd);
+                        String pwd = request.getParameter("password");  
+                        Long campusId = Long.parseLong(request.getParameter("campusID"));
+                        Campus campus = campusServices.findCampusById(campusId);
+                        String telephone = request.getParameter("tel");
+                        String photoUrl = request.getParameter("photoUrl");
+                        Utilisateur u = userServices.creeUtilisateur(nom, prenom, adresseMail, pwd, telephone, campus, photoUrl);
                         Collection<Utilisateur> liste = userServices.getAllUsers();
                         request.setAttribute("listeDesUsers", liste);
                         forwardTo = "index.jsp?action=listerLesUtilisateurs";

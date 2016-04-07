@@ -18,9 +18,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
@@ -47,6 +50,15 @@ public class Utilisateur implements Serializable {
     
     @Column(nullable = false)
     private String password;
+    
+    private String photoUrl;
+    
+    @Column(nullable = false)
+    private String telephone;
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(nullable = false)    
+    private Campus campus;
 
     @Column(nullable = false)
     private byte[] salt;
@@ -64,7 +76,7 @@ public class Utilisateur implements Serializable {
     public Utilisateur() {
     }
 
-    public Utilisateur(final String adresseMail, final String lastname, final String firstname, final String password) {
+    public Utilisateur(final String adresseMail, final String lastname, final String firstname, final String password, final String telephone, final Campus Campus, final String photoUrl) {
         try {
             this.adresseMail = adresseMail;
             this.lastname = lastname;
@@ -74,10 +86,37 @@ public class Utilisateur implements Serializable {
             r.nextBytes(salt);
             this.password = PasswordUtils.encryptStringWithSalt(password, salt);
             this.dateCreation = Calendar.getInstance().getTime();
+            this.telephone = telephone;
+            this.campus = campus;
+            this.photoUrl = photoUrl;
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE, null, ex);
         }
     }    
+    
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+    
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public Campus getCampus() {
+        return campus;
+    }
+
+    public void setCampus(Campus campus) {
+        this.campus = campus;
+    }
 
     public int getId() {
         return id;

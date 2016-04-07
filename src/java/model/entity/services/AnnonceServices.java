@@ -28,13 +28,13 @@ public class AnnonceServices {
     @PersistenceContext
     private EntityManager em;
 
-    public Annonce createAnnonce(final String titre, final String description, final CateAnnonce categorie, final String photoUrl, final Double prix, Utilisateur utilisateur, String telephone, Campus campus) {
+    public Annonce createAnnonce(final String titre, final String description, final CateAnnonce categorie, final String photoUrl, final Double prix, Utilisateur utilisateur) {
         Calendar c = Calendar.getInstance();
         Date dateDepot = c.getTime();
         c.add(Calendar.MONTH, 6);
         Date dateFin = c.getTime();
 
-        Annonce a = new Annonce(titre, description, categorie, photoUrl, dateDepot, dateFin, prix, utilisateur, telephone, campus);
+        Annonce a = new Annonce(titre, description, categorie, photoUrl, dateDepot, dateFin, prix, utilisateur);
         em.persist(a);
         return a;
     }

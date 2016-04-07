@@ -34,9 +34,6 @@ public class ServletAnnonce extends HttpServlet {
     @EJB
     private AnnonceValidator validator;
 
-    @EJB
-    private CampusServices campusServices;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -62,11 +59,8 @@ public class ServletAnnonce extends HttpServlet {
                     CateAnnonce categorie = CateAnnonce.valueOf(cate.toUpperCase());
                     String photoUrl = request.getParameter("photoUrl");
                     Double prix = Double.parseDouble(request.getParameter("prix"));
-                    Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");
-                    String telephone = request.getParameter("tel");
-                    Long campusId = Long.parseLong(request.getParameter("campusID"));
-                    Campus campus = campusServices.findCampusById(campusId);
-                    Annonce a = annonceServices.createAnnonce(titre, description, categorie, photoUrl, prix, utilisateur, telephone, campus);
+                    Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");   
+                    Annonce a = annonceServices.createAnnonce(titre, description, categorie, photoUrl, prix, utilisateur);
                     annonceServices.updateAnnonce(a.getId(), utilisateur.getId());
                     break;
                 }
@@ -121,10 +115,7 @@ public class ServletAnnonce extends HttpServlet {
         String photoUrl = request.getParameter("photoUrl");
         Double prix = Double.parseDouble(request.getParameter("prix"));
         Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");
-        String telephone = request.getParameter("tel");
-        Long campusId = Long.parseLong(request.getParameter("campusID"));
-        Campus campus = campusServices.findCampusById(campusId);
-        Annonce a = annonceServices.createAnnonce(titre, description, categorie, photoUrl, prix, utilisateur, telephone, campus);
+        Annonce a = annonceServices.createAnnonce(titre, description, categorie, photoUrl, prix, utilisateur);
     }
 
     /**

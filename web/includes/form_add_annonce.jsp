@@ -10,7 +10,6 @@
     <form action="ServletAnnonce" method="post">
         <label for="titre">Titre : </label><input type="text" id="titre" name="titre" required/><br/>
         <label for="prix">Prix : </label><input type="number" id="prix" name="prix" step="any" required/><br/>
-        <label for="campus">Campus : </label><input type="text" id="campus" name="campus" required/><br/>
         <label for="categorie"> Catégorie : </label>
         <select id="categorie" name="categorie" size="1">
             <option value="VEHICULE">Vehicule</option>
@@ -22,7 +21,6 @@
         <br/>
         <label for="description">Description : </label>
         <textarea id="description" name="description" required></textarea><br>
-        <label for="tel">Téléphone : </label><input type="tel" id="tel" name="tel"/><br/>
         <label for="phptoUrl">Photo : </label><input type="file" id="photoUrl" name="photoUrl"/><br/>
         <input type="hidden" name="campusID" value="1" />
         <input type="hidden" name="action" value="${param.action}"/>

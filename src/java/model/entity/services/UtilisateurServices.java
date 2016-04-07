@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import model.entity.bean.Campus;
 import model.entity.bean.Utilisateur;
 
 @Stateless
@@ -19,15 +20,15 @@ public class UtilisateurServices {
     @PersistenceContext
     private EntityManager em;
 
-    public void creerUtilisateursDeTest() {
+   /* public void creerUtilisateursDeTest() {
         creeUtilisateur("John", "Lennon", "jlennon", "pwd123456789");
         creeUtilisateur("Paul", "Mac Cartney", "pmc", "pwd123456789");
         creeUtilisateur("Ringo", "Starr", "rstarr", "pwd123456789");
         creeUtilisateur("Georges", "Harisson", "georgesH", "pwd123456789");
-    }
+    }*/
 
-    public Utilisateur creeUtilisateur(final String nom, final String prenom, final String mail, final String password) {
-        Utilisateur u = new Utilisateur(mail, nom, prenom, password);
+    public Utilisateur creeUtilisateur(final String nom, final String prenom, final String mail, final String password, String telephone, Campus campus, final String photoUrl) {
+        Utilisateur u = new Utilisateur(mail, nom, prenom, password, telephone, campus, photoUrl);
         em.persist(u);
         return u;
     }
