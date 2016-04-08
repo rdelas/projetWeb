@@ -5,10 +5,14 @@
  */
 package view.servlet;
 
+import com.delas.common.tools.object.ClassUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,10 +20,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import model.entity.bean.Campus;
 import model.entity.bean.Utilisateur;
 import model.entity.services.CampusServices;
 import model.entity.services.UtilisateurServices;
+import view.servlet.form.UserFormBean;
 
 /**
  *
@@ -30,37 +39,10 @@ public class ServletUserForm extends HttpServlet {
 
     @EJB
     private CampusServices campusServices;
-    
+
     @EJB
     private UtilisateurServices userServices;
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletUserForm</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletUserForm at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -72,11 +54,9 @@ public class ServletUserForm extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        List<Campus> campusList = campusServices.gatAllCampus();
-        
-        request.setAttribute("campusList", campusList);
-        
+
+        addData(request);
+
         RequestDispatcher dp = request.getRequestDispatcher("includes/form_add.jsp");
         dp.include(request, response);
     }
@@ -92,21 +72,51 @@ public class ServletUserForm extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nom = request.getParameter("nom");
-        String prenom = request.getParameter("prenom");
-        String adresseMail = request.getParameter("adresseMail");
-        String pwd = request.getParameter("password");
-        Long campusId = Long.parseLong(request.getParameter("campus"));
-        Campus campus = campusServices.findCampusById(campusId);
-        String photoUrl = request.getParameter("photoUrl");
-        String telephone = request.getParameter("telephone");
-        Utilisateur u = userServices.creeUtilisateur(nom, prenom, adresseMail, pwd, photoUrl, telephone, campus);
-        
-        request.getSession().setAttribute("user", u);
-        RequestDispatcher dp = request.getRequestDispatcher("ServletUsers?action=");
+
+        UserFormBean bean = UserFormBean.hydrate(request.getParameterMap());
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
+        Set<ConstraintViolation<UserFormBean>> validationErrors = validator.validate(bean);
+
+        String forwardTo = "";
+        if (!validationErrors.isEmpty()) {
+
+            System.out.println("Form invalid");
+            Map<String, String> errors = new HashMap<>();
+
+            validationErrors.stream().forEach((error) -> {
+                errors.put(error.getPropertyPath().toString(), error.getMessage());
+            });
+            System.out.println(Arrays.toString(errors.values().toArray()));
+            addData(request);
+            request.setAttribute("errors", errors);
+            
+            request.setAttribute("form", bean);
+            forwardTo = "includes/form_add.jsp";
+
+        } else {
+
+            System.out.println("Form valid");
+            Utilisateur u = userServices.creeUtilisateur(bean);
+            System.out.println(ClassUtil.toString(u));
+            request.getSession().setAttribute("user", u);
+            forwardTo = "ServletLogin";
+        }
+
+        RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
         dp.forward(request, response);
     }
 
+    
+    private void addData(HttpServletRequest request){
+        List<Campus> campusList = campusServices.gatAllCampus();
+
+        request.setAttribute("campusList", campusList);
+        request.setAttribute("titre", "S'enregister");
+        request.setAttribute("btnLabel", "Enregister");
+    }
     /**
      * Returns a short description of the servlet.
      *

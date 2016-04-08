@@ -5,11 +5,7 @@
  */
 package view.servlet.validator;
 
-import com.delas.common.tools.list.ListUtil;
-import com.delas.common.tools.object.ClassUtil;
 import com.delas.common.tools.string.StringUtil;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;

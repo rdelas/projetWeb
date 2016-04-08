@@ -49,12 +49,7 @@
             <c:otherwise>
                 <h1>Bienvenu sur le site!</h1>
 
-                
-                <jsp:include page="/ServletUserForm">  
-                    <jsp:param name="title" value="S'enregister" />                
-                    <jsp:param name="btnLabel" value="Enregistrer" />
-                    <jsp:param name="action" value="creerUnUtilisateur" />
-                </jsp:include>
+                <jsp:include page="/ServletUserForm"/>
             </c:otherwise>    
         </c:choose>
 

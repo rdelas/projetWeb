@@ -39,11 +39,9 @@ public class ServletLogin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        RequestDispatcher dp = request.getRequestDispatcher("ServletUsers?action=");
-        dp.forward(request, response);
+        response.sendRedirect("index.jsp");
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -55,7 +53,7 @@ public class ServletLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().removeAttribute("user");
+        request.getSession().invalidate();
         processRequest(request, response);
     }
 
@@ -71,16 +69,18 @@ public class ServletLogin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String adresseMail = request.getParameter("adresseMail");
-        String password = request.getParameter("password");
         
-        if(!StringUtil.isEmptyTrim(adresseMail) && !StringUtil.isEmptyTrim(password)){
-            Utilisateur user = userServices.getUserByMail(adresseMail);
-            if(user != null && userServices.checkUserPwd(user, password)){
-                request.getSession().setAttribute("user", user);
+        if(request.getSession().getAttribute("user") == null){
+            String adresseMail = request.getParameter("adresseMail");
+            String password = request.getParameter("password");
+
+            if(!StringUtil.isEmptyTrim(adresseMail) && !StringUtil.isEmptyTrim(password)){
+                Utilisateur user = userServices.getUserByMail(adresseMail);
+                if(user != null && userServices.checkUserPwd(user, password)){
+                    request.getSession().setAttribute("user", user);
+                }
             }
         }
-        
         processRequest(request, response);
     }
 
