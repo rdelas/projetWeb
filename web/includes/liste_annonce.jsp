@@ -5,15 +5,16 @@
 --%>
 
 <%@include file="header.jsp" %>
-
+<c:out value="${listeDesAnnonces}"></c:out>
 <table>
     <thead>
     <th>Titre</th>
     <th>Photo</th>
     <th>Prix</th>
-    <!-- <th>Université</th> -->
+    <th>Université</th>
     <th>Date de publication</th>
 </thead>
+
 <c:forEach var="u" items="${listeDesAnnonces}" varStatus="status">
     <tr>
         <td id="td-titre-${status.index}" class="tdTitre" >${a.titre}</td>
@@ -25,12 +26,12 @@
 </c:forEach>
 
 </table>
-<!-- <c:if test="${(currentPage-1) gt 1}" >
-    <a href="#" onclick="return getUserList(1);">&lt;&lt;</a>
-    <a href="#" onclick="return getUserList(${(currentPage-1==1)?1:currentPage-1});">&lt;</a>
+<c:if test="${(currentPage-1) gt 1}" >
+    <a href="#" onclick="return getAnnonceList(1);">&lt;&lt;</a>
+    <a href="#" onclick="return getAnnonceList(${(currentPage-1==1)?1:currentPage-1});">&lt;</a>
     <c:forEach begin="1" end="${nbPages}" varStatus="status">
-        <a href="#" onclick="return getUserList(${status.index});">${status.index}</a>
+        <a href="#" onclick="return getAnnonceList(${status.index});">${status.index}</a>
     </c:forEach>
-    <a href="#" onclick="return getUserList(${(currentPage+1==nbPages)?nbPages:currentPage+1});">&gt;</a>
-    <a href="#" onclick="return getUserList(${nbPages});">&gt;&gt;</a>
-</c:if> -->
+    <a href="#" onclick="return getAnnonceList(${(currentPage+1==nbPages)?nbPages:currentPage+1});">&gt;</a>
+    <a href="#" onclick="return getAnnonceList(${nbPages});">&gt;&gt;</a>
+</c:if>

@@ -22,7 +22,6 @@
         <label for="description">Description : </label>
         <textarea id="description" name="description" required></textarea><br>
         <label for="phptoUrl">Photo : </label><input type="file" id="photoUrl" name="photoUrl"/><br/>
-        <input type="hidden" name="campusID" value="1" />
         <input type="hidden" name="action" value="${param.action}"/>
         <input type="submit" value="${param.btnLabel}" name="submit" class="bouton"/>
     </form>

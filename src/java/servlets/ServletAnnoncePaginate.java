@@ -59,17 +59,16 @@ public class ServletAnnoncePaginate extends HttpServlet {
             }
         }
 
-//        String forwardTo = "";
-//        String message = "";
+System.out.print("TEST");
         Collection<Annonce> liste = annonceServices.getAnnoncePaginated(page, pageSize);
         int size = annonceServices.getAllAnnonce().size();
         int nbPage = size / pageSize + ((size % pageSize > 0) ? 1 : 0);
-        request.setAttribute("listeDesAnnonce", liste);
+        request.setAttribute("listeDesAnnonces", liste);
         request.setAttribute("nbPages", nbPage);
         request.setAttribute("currentPage", page);
 
         RequestDispatcher dp = request.getRequestDispatcher("includes/liste_annonce.jsp");
-        dp.forward(request, response);
+        dp.include(request, response);
 //        response.setContentType(MediaType.TEXT_PLAIN);
 //        response.setHeader("Cache-Control", "no-cache");
 //        

@@ -23,7 +23,7 @@
 </jsp:include>
 
 <c:if test="${param.action == 'listerLesAnnonces'}" >
-    <jsp:include page="list_annonce.jsp" >
+    <jsp:include page="/ServletAnnoncePaginate" >
         <jsp:param name="listeDesAnnonces" value="${requestScope['listeDesAnnonces']}" />
     </jsp:include>
 </c:if>
