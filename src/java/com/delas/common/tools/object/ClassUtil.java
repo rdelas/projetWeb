@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class ClassUtil {
 
-	private static final Map<Class<?>, Class<?>> primitiveWrapperMap = new HashMap<Class<?>, Class<?>>();
+	private static final Map<Class<?>, Class<?>> primitiveWrapperMap = new HashMap<>();
 	
 	static {
 		primitiveWrapperMap.put(Boolean.TYPE, Boolean.class);
@@ -26,15 +26,15 @@ public class ClassUtil {
 		primitiveWrapperMap.put(Void.TYPE, Void.TYPE);
 	}
 
-	private static final Map<Class<?>, Class<?>> wrapperPrimitiveMap = new HashMap<Class<?>, Class<?>>();
+	private static final Map<Class<?>, Class<?>> wrapperPrimitiveMap = new HashMap<>();
 
 	static {
-		for (Class<?> primitiveClass : primitiveWrapperMap.keySet()) {
-			Class<?> wrapperClass = primitiveWrapperMap.get(primitiveClass);
-			if (!primitiveClass.equals(wrapperClass)) {
-				wrapperPrimitiveMap.put(wrapperClass, primitiveClass);
-			}
-		}
+            primitiveWrapperMap.keySet().stream().forEach((primitiveClass) -> {
+                Class<?> wrapperClass = primitiveWrapperMap.get(primitiveClass);
+                if (!primitiveClass.equals(wrapperClass)) {
+                    wrapperPrimitiveMap.put(wrapperClass, primitiveClass);
+                }
+            });
 	}
 
 	public static synchronized String toString(Object obj) {
@@ -42,7 +42,7 @@ public class ClassUtil {
 	}
 
 	public static synchronized String toString(Object obj, int n) {
-		return toString(obj, n, 0, new ArrayList<Integer>());
+		return toString(obj, n, 0, new ArrayList<>());
 	}
 
 	private static synchronized String toString(Object obj, int deepness, int tab, List<Integer> lasts) {
@@ -115,14 +115,14 @@ public class ClassUtil {
 			}
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace(System.err);
 		}
 
 		return str.toString();
 	}
 	
 	private static synchronized List<Field> getAllFields(Class<?> cl){
-		List<Field> fields = new ArrayList<Field>();
+		List<Field> fields = new ArrayList<>();
 		
 		fields.addAll(Arrays.asList(cl.getDeclaredFields()));
 		
