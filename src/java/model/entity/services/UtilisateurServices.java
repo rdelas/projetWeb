@@ -28,7 +28,7 @@ public class UtilisateurServices {
     private CampusServices campusService;
 
     public Utilisateur creeUtilisateur(final UserFormBean bean) { 
-        Campus campus = campusService.findCampusById(bean.getCampusIdAsLong());
+        Campus campus = campusService.findCampusById(bean.getCampusId());
         if(campus == null){
             return null;
         }

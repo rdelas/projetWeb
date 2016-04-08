@@ -7,8 +7,6 @@ package view.servlet;
 
 import com.delas.common.tools.object.ClassUtil;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +19,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import model.entity.bean.Campus;
 import model.entity.bean.Utilisateur;
 import model.entity.services.CampusServices;
@@ -79,13 +74,11 @@ public class ServletUserForm extends HttpServlet {
         String forwardTo = "";
         if (!bean.validate()) {
 
-            System.out.println("Form invalid");
             Map<String, String> errors = new HashMap<>();
             Set<ConstraintViolation<Bean>> validationErrors = bean.getErrors();
             validationErrors.stream().forEach((error) -> {
                 errors.put(error.getPropertyPath().toString(), error.getMessage());
             });
-            System.out.println(Arrays.toString(errors.values().toArray()));
             addData(request);
             request.setAttribute("errors", errors);
             

@@ -51,8 +51,8 @@ public class Fixtures {
         Utilisateur u1 = uSvcs.creeUtilisateur("Delas", "Romain", "r.delas01@gmail.com", "testPWD1", null, "0667760038",  c2);
         Utilisateur u2 = uSvcs.creeUtilisateur("Chauvet", "Clémence", "r.delas02@gmail.com", "testPWD2", null, "0666666666", c2);
         
-        Annonce an1 = anSvcs.createAnnonce("Vends des trucs", "Vends des trucs en test", CateAnnonce.VETEMENT, null, 75.5, u1);
-        Annonce an2 = anSvcs.createAnnonce("Vend d'autres trucs", "Vends des trucs en test qui font de la musique", CateAnnonce.MUSIQUE, null, 2500.47, u2);
+        Annonce an1 = anSvcs.creerAnnonce("Vends des trucs", "Vends des trucs en test", CateAnnonce.VETEMENT, null, 75.5, u1);
+        Annonce an2 = anSvcs.creerAnnonce("Vend d'autres trucs", "Vends des trucs en test qui font de la musique", CateAnnonce.MUSIQUE, null, 2500.47, u2);
         
     }
     

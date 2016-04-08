@@ -6,7 +6,7 @@
 
 <%@include file="header.jsp" %>
 <fieldset>
-    <legend>Ajouter une annonce</legend>
+    <legend>${titre}</legend>
     <form action="ServletAnnonce" method="post">
         <label for="titre">Titre : </label><input type="text" id="titre" name="titre" required/><br/>
         <label for="prix">Prix : </label><input type="number" id="prix" name="prix" step="any" required/><br/>
@@ -23,7 +23,7 @@
         <textarea id="description" name="description" required></textarea><br>
         <label for="phptoUrl">Photo : </label><input type="file" id="photoUrl" name="photoUrl"/><br/>
         <input type="hidden" name="action" value="${param.action}"/>
-        <input type="submit" value="${param.btnLabel}" name="submit" class="bouton"/>
+        <input type="submit" value="${btnLabel}" name="submit" class="bouton"/>
     </form>
 </fieldset>
 <c:if test="${errors != null}">

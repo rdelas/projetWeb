@@ -5,6 +5,7 @@
  */
 package view.servlet.form;
 
+import com.delas.common.tools.number.MyNumberUtils;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -15,6 +16,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  *
@@ -34,12 +36,34 @@ public abstract class Bean implements Serializable {
 
         for (Field field : clazz.getDeclaredFields()) {
             String fieldName = field.getName();
-            String[] value = parameters.get(fieldName);
-            if (value != null) {
+            String[] paramValue = parameters.get(fieldName);
+            if (paramValue != null && paramValue.length > 0) {
                 field.setAccessible(true);
+                Object value = null;
                 try {
-                    field.set(t, value[0]);
-                } catch (IllegalArgumentException | IllegalAccessException ex) {
+                    if(paramValue.length > 1){
+                        value = paramValue;
+                    } else{
+                        String pVal = paramValue[0];
+                        Class<?> fieldClazz = Class.forName(field.getType().getCanonicalName());
+                        if(fieldClazz.isEnum()){
+                            value = Enum.valueOf((Class<Enum>)field.getType(), pVal);
+                        } else if(Number.class.isAssignableFrom(fieldClazz) && NumberUtils.isParsable(pVal)){
+                            if(Double.class.isAssignableFrom(fieldClazz)){
+                                value = Double.parseDouble(pVal);
+                            } else if(Float.class.isAssignableFrom(fieldClazz)) {
+                                value = Float.parseFloat(pVal);
+                            } else if(Long.class.isAssignableFrom(fieldClazz)) {
+                                value = Long.parseLong(pVal);
+                            } else if(Integer.class.isAssignableFrom(fieldClazz)) {
+                                value = Integer.parseInt(pVal);
+                            }
+                        } else{
+                            value = pVal;
+                        }
+                    }
+                    field.set(t, value);
+                } catch (IllegalArgumentException | IllegalAccessException | ClassNotFoundException ex) {
                     Logger.getLogger(Bean.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 field.setAccessible(false);

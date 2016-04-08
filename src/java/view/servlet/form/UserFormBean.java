@@ -6,6 +6,7 @@
 package view.servlet.form;
 
 import java.util.Map;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -20,44 +21,35 @@ public class UserFormBean extends Bean {
     
     private static final String PHONE_PATTERN = "0{1}[1-7]{1}[0-9]{8}";
     
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "Le nom ne peut pas être null")
+    @Size(min = 1, max = 255, message = "Le nom ne doit pas être vide" )
     private String nom;
     
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "Le prénom ne peut pas être null")
+    @Size(min = 1, max = 255, message = "Le prénom ne doit pas être vide" )
     private String prenom;
 
-    @NotNull
-    @Pattern(regexp = EMAIL_PATTERN)
+    @NotNull(message = "Le mail ne peut pas être null")
+    @Size(min = 1, max = 255, message = "Le mail ne doit pas être vide" )
+    @Pattern(regexp = EMAIL_PATTERN, message = "Le mail saisi n'est pas valide")
     private String mail;
     
-    @NotNull
-    @Size(min = 6, max = 255)
+    @NotNull(message = "Le mot de passe ne peut pas être null")
+    @Size(min = 6, max = 255, message = "Le mot de passe doit être d'une longueur minimale de 6 caractères" )
     private String pwd;
     
-    @Size(max = 255)
+    @Size(max = 255, message = "Le nom du fichier est trop long" )
     private String photoUrl;
     
-    @Size(min = 10, max = 10)
-    @Pattern(regexp = PHONE_PATTERN)
+    @Size(min = 10, max = 10, message = "Le numéro de téléphone doit comporter 10 chiffres")
+    @Pattern(regexp = PHONE_PATTERN, message= "Le numéro de téléphone doit respecter le format suivant : 0[1-7][0-9]{8}")
     private String telephone;
     
-    @NotNull
-    @Pattern(regexp = "[0-9]+")
-    private String campusId;
+    @NotNull(message = "Le campus ne peut pas être null")
+    @Min(value = 0, message = "L'identifiant du campus doit être un nombre")
+    private Long campusId;
 
     public UserFormBean() {
-    }
-
-    public UserFormBean(String nom, String prenom, String mail, String pwd, String photoUrl, String telephone, String campusId) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.mail = mail;
-        this.pwd = pwd;
-        this.photoUrl = photoUrl;
-        this.telephone = telephone;
-        this.campusId = campusId;
     }
     
     public static UserFormBean createFromRequestParameters(final Map<String, String[]> parameters){
@@ -112,15 +104,11 @@ public class UserFormBean extends Bean {
         this.telephone = telephone;
     }
 
-    public String getCampusId() {
+    public Long getCampusId() {
         return campusId;
     }
-
-    public Long getCampusIdAsLong(){
-        return Long.parseLong(campusId);
-    }
     
-    public void setCampusId(String campusId) {
+    public void setCampusId(Long campusId) {
         this.campusId = campusId;
     }
     
