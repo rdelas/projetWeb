@@ -8,6 +8,7 @@ package view.servlet;
 import java.io.IOException;
 import java.util.Collection;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,7 +48,7 @@ public class ServletAnnonce extends HttpServlet {
         String action = request.getParameter("action");
         String forwardTo = "";
         String message = "";
-
+System.out.print("ACTION" + action);
         if (action != null) {
             switch (action) {
                 case "ceerUneAnnonce": {
@@ -62,15 +63,11 @@ public class ServletAnnonce extends HttpServlet {
                     annonceServices.updateAnnonce(a.getId(), utilisateur.getId());
                     break;
                 }
-                case "listerLesAnnonces": {
-                    Collection<Annonce> liste = annonceServices.getAllAnnonce();
-                    request.setAttribute("listeDesAnnonces", liste);
-                    forwardTo = "index.jsp?action=listerLesAnnonces";
-                    message = "Liste des annonces";
-                    break;
-                }
             }
         }
+        
+        RequestDispatcher dp = request.getRequestDispatcher("includes/liste_annonce.jsp");
+        dp.include(request, response);
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

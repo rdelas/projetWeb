@@ -5,14 +5,15 @@
  */
 
 function getAnnonceList(page) {
-    var url = "ServletAnnoncePaginate";
+    var url = "/ServletAnnoncePaginate";
     var xhr = new XMLHttpRequest();
 
-    xhr.open("POST", url, true);
+    xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onload = function (e) {
         if (this.status === 200) {
             document.querySelector("#corps").innerHTML = this.responseText;
+            document.write("TEST" + this.responseText);
         }
     };
 
