@@ -27,8 +27,8 @@ public class UtilisateurServices {
         creeUtilisateur("Georges", "Harisson", "georgesH", "pwd123456789");
     }*/
 
-    public Utilisateur creeUtilisateur(final String nom, final String prenom, final String mail, final String password, Campus campus) {
-        Utilisateur u = new Utilisateur(mail, nom, prenom, password, campus);
+    public Utilisateur creeUtilisateur(final String nom, final String prenom, final String mail, final String password, final String photoUrl, final String telephone, final Campus campus) {
+        Utilisateur u = new Utilisateur(mail, nom, prenom, password, photoUrl, telephone, campus);
         em.persist(u);
         em.flush();
         return u;

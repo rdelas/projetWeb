@@ -84,7 +84,7 @@ public class ServletUsers extends HttpServlet {
                         Campus campus = campusServices.findCampusById(campusId);
                         String telephone = request.getParameter("tel");
                         String photoUrl = request.getParameter("photoUrl");
-                        Utilisateur u = userServices.creeUtilisateur(nom, prenom, adresseMail, pwd, campus);
+                        Utilisateur u = userServices.creeUtilisateur(nom, prenom, adresseMail, pwd, photoUrl, telephone,campus);
                         Collection<Utilisateur> liste = userServices.getAllUsers();
                         request.setAttribute("listeDesUsers", liste);
                         forwardTo = "index.jsp?action=listerLesUtilisateurs";

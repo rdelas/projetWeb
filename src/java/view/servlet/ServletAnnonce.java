@@ -14,11 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.entity.bean.Annonce;
-import model.entity.bean.Campus;
 import model.entity.bean.CateAnnonce;
 import model.entity.bean.Utilisateur;
 import model.entity.services.AnnonceServices;
-import model.entity.services.CampusServices;
 import view.servlet.validator.AnnonceValidator;
 
 /**

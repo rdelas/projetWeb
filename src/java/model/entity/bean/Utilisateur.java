@@ -50,10 +50,12 @@ public class Utilisateur implements Serializable {
     
     @Column(nullable = false)
     private String password;
-        
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(nullable = false)    
-    private Campus campus;
+    
+    @Column(nullable = true)
+    private String photoUrl;
+    
+    @Column(nullable = true)
+    private String telephone;
 
     @Column(nullable = false)
     private byte[] salt;
@@ -62,17 +64,18 @@ public class Utilisateur implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dateCreation;
         
-    @OneToMany(mappedBy = "utilisateur")
-    private List<Telephone> telephones;
     
     @OneToMany(mappedBy = "utilisateur")
     private List<Annonce> annonces;
     
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(nullable = false)    
+    private Campus campus;
     
     public Utilisateur() {
     }
 
-    public Utilisateur(final String adresseMail, final String lastname, final String firstname, final String password, final Campus campus) {
+    public Utilisateur(final String adresseMail, final String lastname, final String firstname, final String password, final String photoUrl, final String telephone, final Campus campus) {
         try {
             this.adresseMail = adresseMail;
             this.lastname = lastname;
@@ -83,10 +86,20 @@ public class Utilisateur implements Serializable {
             this.password = PasswordUtils.encryptStringWithSalt(password, salt);
             this.dateCreation = Calendar.getInstance().getTime();
             this.campus = campus;
+            this.photoUrl = photoUrl;
+            this.telephone = telephone;
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE, null, ex);
         }
     }    
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
 
     public Campus getCampus() {
         return campus;
@@ -160,12 +173,12 @@ public class Utilisateur implements Serializable {
         this.annonces = annonces;
     }
 
-    public List<Telephone> getTelephones() {
-        return telephones;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setTelephones(List<Telephone> telephones) {
-        this.telephones = telephones;
+    public void setTelephones(String telephone) {
+        this.telephone = telephone;
     }
     
     @Override
