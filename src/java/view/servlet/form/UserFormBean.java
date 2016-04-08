@@ -5,7 +5,6 @@
  */
 package view.servlet.form;
 
-import java.io.Serializable;
 import java.util.Map;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -15,7 +14,7 @@ import javax.validation.constraints.Size;
  *
  * @author rdelas
  */
-public class UserFormBean implements Serializable {
+public class UserFormBean extends Bean {
         
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$";
     
@@ -61,18 +60,8 @@ public class UserFormBean implements Serializable {
         this.campusId = campusId;
     }
     
-    public static UserFormBean hydrate(final Map<String, String[]> parameters){
-        UserFormBean bean = new UserFormBean();
-        
-        bean.setNom(parameters.get("nom")[0]);
-        bean.setPrenom( parameters.get("prenom")[0]);
-        bean.setMail(parameters.get("mail")[0]);
-        bean.setPwd(parameters.get("pwd")[0]);
-        bean.setCampusId(parameters.get("campusId")[0]);
-        bean.setPhotoUrl(parameters.get("photoUrl")[0]);
-        bean.setTelephone(parameters.get("telephone")[0]);
-        
-        return bean;
+    public static UserFormBean createFromRequestParameters(final Map<String, String[]> parameters){
+        return hydrate(parameters, UserFormBean.class);
     }
 
     public String getNom() {

@@ -28,6 +28,7 @@ import model.entity.bean.Campus;
 import model.entity.bean.Utilisateur;
 import model.entity.services.CampusServices;
 import model.entity.services.UtilisateurServices;
+import view.servlet.form.Bean;
 import view.servlet.form.UserFormBean;
 
 /**
@@ -73,19 +74,14 @@ public class ServletUserForm extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        UserFormBean bean = UserFormBean.hydrate(request.getParameterMap());
-
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-
-        Set<ConstraintViolation<UserFormBean>> validationErrors = validator.validate(bean);
+        UserFormBean bean = UserFormBean.createFromRequestParameters(request.getParameterMap());
 
         String forwardTo = "";
-        if (!validationErrors.isEmpty()) {
+        if (!bean.validate()) {
 
             System.out.println("Form invalid");
             Map<String, String> errors = new HashMap<>();
-
+            Set<ConstraintViolation<Bean>> validationErrors = bean.getErrors();
             validationErrors.stream().forEach((error) -> {
                 errors.put(error.getPropertyPath().toString(), error.getMessage());
             });

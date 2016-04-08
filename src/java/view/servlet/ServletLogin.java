@@ -7,7 +7,6 @@ package view.servlet;
 
 import java.io.IOException;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +25,7 @@ public class ServletLogin extends HttpServlet {
 
     @EJB
     private UtilisateurServices userServices;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,7 +37,7 @@ public class ServletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.sendRedirect("index.jsp");
     }
 
@@ -68,15 +67,14 @@ public class ServletLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        if(request.getSession().getAttribute("user") == null){
+
+        if (request.getSession().getAttribute("user") == null) {
             String adresseMail = request.getParameter("adresseMail");
             String password = request.getParameter("password");
 
-            if(!StringUtil.isEmptyTrim(adresseMail) && !StringUtil.isEmptyTrim(password)){
+            if (!StringUtil.isEmptyTrim(adresseMail) && !StringUtil.isEmptyTrim(password)) {
                 Utilisateur user = userServices.getUserByMail(adresseMail);
-                if(user != null && userServices.checkUserPwd(user, password)){
+                if (user != null && userServices.checkUserPwd(user, password)) {
                     request.getSession().setAttribute("user", user);
                 }
             }
