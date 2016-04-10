@@ -16,6 +16,12 @@
     </ul>
 </nav>
 
+<jsp:include page="form_add.jsp">  
+    <jsp:param name="title" value="Modifier les détails d'un utilisateur :" />
+    <jsp:param name="btnLabel" value="Modifier l'utilisateur" />                
+    <jsp:param name="action" value="updateUtilisateur" />
+</jsp:include>
+
 <jsp:include page="form_add_annonce.jsp">  
     <jsp:param name="title" value="Ajouter une annonce" />                
     <jsp:param name="btnLabel" value="Enregistrer" />
@@ -28,5 +34,5 @@
 </c:if>
 
 <div id="corps" >
-    
+
 </div>

@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.entity.bean.Utilisateur;
 import model.entity.services.UtilisateurServices;
-import com.delas.common.tools.string.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 
 /**
