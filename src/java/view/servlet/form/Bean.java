@@ -5,7 +5,6 @@
  */
 package view.servlet.form;
 
-import com.delas.common.tools.number.MyNumberUtils;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -16,6 +15,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
@@ -33,7 +33,7 @@ public abstract class Bean implements Serializable {
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(Bean.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         for (Field field : clazz.getDeclaredFields()) {
             String fieldName = field.getName();
             String[] paramValue = parameters.get(fieldName);
@@ -48,6 +48,8 @@ public abstract class Bean implements Serializable {
                         Class<?> fieldClazz = Class.forName(field.getType().getCanonicalName());
                         if(fieldClazz.isEnum()){
                             value = Enum.valueOf((Class<Enum>)field.getType(), pVal);
+                        } else if (fieldClazz.equals(Boolean.TYPE)) {
+                            value = BooleanUtils.toBooleanObject(pVal);
                         } else if(Number.class.isAssignableFrom(fieldClazz) && NumberUtils.isParsable(pVal)){
                             if(Double.class.isAssignableFrom(fieldClazz)){
                                 value = Double.parseDouble(pVal);

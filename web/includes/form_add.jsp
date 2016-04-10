@@ -27,8 +27,12 @@
         <c:if test="${errors['pwd'] != null}" >
             <p class="error" >${errors['pwd']}<p>
         </c:if>
-        <label for="confirm_password">Confirmer votre mot de passe</label>
-        <input type="password" name="confirm_password" id="confirm_password" minlength="6" title="6 caracteres minimum" required/><br/>
+        <label for="confirm">Confirmer votre mot de passe</label>
+        <input type="password" name="confirm" id="confirm" minlength="6" title="6 caracteres minimum" required/><br/>
+        <c:if test="${errors['confirm'] != null}" >
+            <p class="error" >${errors['confirm']}<p>
+        </c:if>
+        
         <label for="telephone">Téléphone</label>
         <input type="tel" id="telephone" name="telephone" maxlength="10" value="${form.telephone}" /><br/>
         <c:if test="${errors['telephone'] != null}" >

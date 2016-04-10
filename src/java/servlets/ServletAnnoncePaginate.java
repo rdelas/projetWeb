@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.entity.bean.Annonce;
 import model.entity.services.AnnonceServices;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -43,7 +44,7 @@ public class ServletAnnoncePaginate extends HttpServlet {
         String pageStr = request.getParameter("page");
         String pageSizeStr = request.getParameter("pageSize");
         int page = 1, pageSize = 10;
-        if (!StringUtil.isEmptyTrim(pageStr)) {
+        if (!StringUtils.isNotBlank(pageStr)) {
             try {
                 page = Integer.parseInt(pageStr);
             } catch (NumberFormatException e) {
@@ -51,7 +52,7 @@ public class ServletAnnoncePaginate extends HttpServlet {
             }
         }
 
-        if (!StringUtil.isEmptyTrim(pageSizeStr)) {
+        if (!StringUtils.isNotBlank(pageSizeStr)) {
             try {
                 pageSize = Integer.parseInt(pageSizeStr);
             } catch (NumberFormatException e) {

@@ -38,6 +38,10 @@ public class UserFormBean extends Bean {
     @Size(min = 6, max = 255, message = "Le mot de passe doit être d'une longueur minimale de 6 caractères" )
     private String pwd;
     
+    @NotNull(message = "La confirmation de mot de passe ne peut pas être null")
+    @Size(min = 6, max = 255, message = "La confirmation du mot de passe doit être d'une longueur minimale de 6 caractères" )
+    private String confirm;
+    
     @Size(max = 255, message = "Le nom du fichier est trop long" )
     private String photoUrl;
     
@@ -86,6 +90,14 @@ public class UserFormBean extends Bean {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public String getConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(String confirm) {
+        this.confirm = confirm;
     }
 
     public String getPhotoUrl() {
