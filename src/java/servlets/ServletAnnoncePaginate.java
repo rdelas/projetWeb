@@ -5,7 +5,6 @@
  */
 package servlets;
 
-import com.delas.common.tools.string.StringUtil;
 import java.io.IOException;
 import java.util.Collection;
 import javax.ejb.EJB;

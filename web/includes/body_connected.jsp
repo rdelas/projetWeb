@@ -16,10 +16,7 @@
     </ul>
 </nav>
 
-<jsp:include page="form_add_annonce.jsp">  
-    <jsp:param name="title" value="Ajouter une annonce" />                
-    <jsp:param name="btnLabel" value="Enregistrer" />
-</jsp:include>
+<jsp:include page="/ServletAnnonceForm"/>
 
 <c:if test="${param.action == 'listerLesAnnonces'}" >
     <jsp:include page="/ServletAnnoncePaginate" >
