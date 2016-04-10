@@ -16,12 +16,16 @@
     </ul>
 </nav>
 
-<jsp:include page="/ServletAnnonceForm"/>
+<jsp:include page="form_add.jsp">  
+    <jsp:param name="title" value="Modifier les détails d'un utilisateur :" />
+    <jsp:param name="btnLabel" value="Modifier l'utilisateur" />                
+    <jsp:param name="action" value="updateUtilisateur" />
+</jsp:include>
 
 <jsp:include page="/ServletAnnoncePaginate" >
     <jsp:param name="listeDesAnnonces" value="${requestScope['listeDesAnnonces']}" />
 </jsp:include>
 
 <div id="corps" >
-    
+
 </div>
