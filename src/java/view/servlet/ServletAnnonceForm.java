@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import model.entity.bean.Annonce;
-import model.entity.bean.CateAnnonce;
 import model.entity.bean.Utilisateur;
 import model.entity.services.AnnonceServices;
 import view.servlet.form.AnnonceFormBean;
@@ -28,8 +27,8 @@ import view.servlet.form.Bean;
  *
  * @author Clem
  */
-@WebServlet(name = "ServletAnnonce", urlPatterns = {"/ServletAnnonce"})
-public class ServletAnnonce extends HttpServlet {
+@WebServlet(name = "ServletAnnonceForm", urlPatterns = {"/ServletAnnonceForm"})
+public class ServletAnnonceForm extends HttpServlet {
 
     @EJB
     private AnnonceServices annonceServices;
@@ -46,29 +45,8 @@ public class ServletAnnonce extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String action = request.getParameter("action");
-        String forwardTo = "";
-        String message = "";
-        System.out.print("ACTION" + action);
-        if (action != null) {
-            switch (action) {
-                case "creerUneAnnonce": {
-                    String titre = request.getParameter("titre");
-                    String description = request.getParameter("description");
-                    String cate = request.getParameter("categorie");
-                    CateAnnonce categorie = CateAnnonce.valueOf(cate.toUpperCase());
-                    String photoUrl = request.getParameter("photoUrl");
-                    Double prix = Double.parseDouble(request.getParameter("prix"));
-                    Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");   
-                    Annonce a = annonceServices.creerAnnonce(titre, description, categorie, photoUrl, prix, utilisateur);
-                    annonceServices.updateAnnonce(a.getId(), utilisateur.getId());
-                    break;
-                }
-            }
-        }
         
-        RequestDispatcher dp = request.getRequestDispatcher("includes/liste_annonce.jsp");
+        RequestDispatcher dp = request.getRequestDispatcher("includes/form_add_annonce.jsp");
         dp.include(request, response);
     }
 
@@ -83,6 +61,8 @@ public class ServletAnnonce extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setAttribute("titre", "Ajouter une annonce");
+        request.setAttribute("btnLabel", "Ajouter");
         processRequest(request, response);
     }
 

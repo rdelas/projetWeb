@@ -27,6 +27,7 @@
     <jsp:param name="btnLabel" value="Enregistrer" />
 </jsp:include>
 
+<jsp:include page="/ServletAnnonceForm"/>
 <c:if test="${param.action == 'listerLesAnnonces'}" >
     <jsp:include page="/ServletAnnoncePaginate" >
         <jsp:param name="listeDesAnnonces" value="${requestScope['listeDesAnnonces']}" />
