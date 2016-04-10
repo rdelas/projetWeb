@@ -83,6 +83,4 @@ public class AnnonceFormBean extends Bean {
         this.photoUrl = photoUrl;
     }
     
-    
-
 }

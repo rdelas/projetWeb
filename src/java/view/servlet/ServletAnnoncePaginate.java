@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlets;
+package view.servlet;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -59,7 +59,7 @@ public class ServletAnnoncePaginate extends HttpServlet {
             }
         }
 
-System.out.print("TEST");
+        System.out.print("TEST");
         Collection<Annonce> liste = annonceServices.getAnnoncePaginated(page, pageSize);
         int size = annonceServices.getAllAnnonce().size();
         int nbPage = size / pageSize + ((size % pageSize > 0) ? 1 : 0);
