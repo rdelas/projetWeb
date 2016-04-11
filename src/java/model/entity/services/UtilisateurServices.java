@@ -4,6 +4,7 @@ import com.delas.common.tools.password.PasswordUtils;
 import com.delas.common.tools.string.StringUtil;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -61,14 +62,16 @@ public class UtilisateurServices {
         return q.getResultList();
     }
 
-    public void updateUser(final int id, final String nom, final String prenom, final String adresseMail) {
+    public void updateUser(final String mail, final String nom, final String prenom, final String password, final String photoUrl, final String telephone, final Campus campus) {
 
-        Utilisateur u = em.find(Utilisateur.class, id);
-
+        Utilisateur u = em.find(Utilisateur.class, mail);
+        
         u.setFirstname(prenom);
         u.setLastname(nom);
-        u.setAdresseMail(adresseMail);
-
+        u.setCampus(campus);
+        u.setPassword(password);
+        u.setPhotoUrl(photoUrl);
+        u.setTelephones(telephone);
     }
 
     public Utilisateur getUserByMail(final String adresseMail) {

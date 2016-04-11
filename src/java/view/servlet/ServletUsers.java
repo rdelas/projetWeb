@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.entity.services.UtilisateurServices;
 import model.entity.bean.Utilisateur;
 import com.delas.common.tools.string.StringUtil;
+import java.util.List;
 import model.entity.bean.Campus;
 import model.entity.services.CampusServices;
 
@@ -29,7 +30,7 @@ public class ServletUsers extends HttpServlet {
 
     @EJB
     private UtilisateurServices userServices;
-    
+
     @EJB
     private CampusServices campusServices;
 
@@ -51,59 +52,66 @@ public class ServletUsers extends HttpServlet {
 
         if (action != null) {
             switch (action) {
-                case "connect" :
-                case "disconnect" :
-                    {
-                        forwardTo = "ServletLogin";
-                        break;
-                    }
-                case "listerLesUtilisateurs":
-                    {
-                        Collection<Utilisateur> liste = userServices.getAllUsers();
-                        request.setAttribute("listeDesUsers", liste);
-                        forwardTo = "index.jsp?action=listerLesUtilisateurs";
-                        message = "Liste des utilisateurs";
-                        break;
-                    }
-               /* case "creerUtilisateursDeTest":
-                    {
-                        userServices.creerUtilisateursDeTest();
-                        Collection<Utilisateur> liste = userServices.getAllUsers();
-                        request.setAttribute("listeDesUsers", liste);
-                        forwardTo = "index.jsp?action=listerLesUtilisateurs";
-                        message = "Liste des utilisateurs";
-                        break;
-                    }*/
-                case "creerUnUtilisateur":
-                    {
-                        String nom = request.getParameter("nom");
-                        String prenom = request.getParameter("prenom");
-                        String adresseMail = request.getParameter("adresseMail");                        
-                        String pwd = request.getParameter("password");  
-                        Long campusId = Long.parseLong(request.getParameter("campusID"));
-                        Campus campus = campusServices.findCampusById(campusId);
-                        String telephone = request.getParameter("tel");
-                        String photoUrl = request.getParameter("photoUrl");
-                        Utilisateur u = userServices.creeUtilisateur(nom, prenom, adresseMail, pwd, photoUrl, telephone,campus);
-                        Collection<Utilisateur> liste = userServices.getAllUsers();
-                        request.setAttribute("listeDesUsers", liste);
-                        forwardTo = "index.jsp?action=listerLesUtilisateurs";
-                        message = "Ajout d'un utilisateur";
-                        break;
-                    }
-                case "updateUtilisateur":
-                    {
-                        String nom = request.getParameter("nom");
-                        String prenom = request.getParameter("prenom");
-                        String adresseMail = request.getParameter("adresseMail");
-                        Utilisateur u = userServices.getUserByMail(adresseMail);
-                        userServices.updateUser(u.getId(), nom, prenom, adresseMail);
-                        Collection<Utilisateur> liste = userServices.getAllUsers();
-                        request.setAttribute("listeDesUsers", liste);
-                        forwardTo = "index.jsp?action=listerLesUtilisateurs";
-                        message = "Modification de l'utilisateur "+adresseMail;
-                        break;
-                    }
+                case "connect":
+                case "disconnect": {
+                    forwardTo = "ServletLogin";
+                    break;
+                }
+                case "listerLesUtilisateurs": {
+                    Collection<Utilisateur> liste = userServices.getAllUsers();
+                    request.setAttribute("listeDesUsers", liste);
+                    forwardTo = "index.jsp?action=listerLesUtilisateurs";
+                    message = "Liste des utilisateurs";
+                    break;
+                }
+                /* case "creerUtilisateursDeTest":
+                 {
+                 userServices.creerUtilisateursDeTest();
+                 Collection<Utilisateur> liste = userServices.getAllUsers();
+                 request.setAttribute("listeDesUsers", liste);
+                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
+                 message = "Liste des utilisateurs";
+                 break;
+                 }*/
+                case "creerUnUtilisateur": {
+                    String nom = request.getParameter("nom");
+                    String prenom = request.getParameter("prenom");
+                    String adresseMail = request.getParameter("adresseMail");
+                    String pwd = request.getParameter("password");
+                    Long campusId = Long.parseLong(request.getParameter("campusID"));
+                    Campus campus = campusServices.findCampusById(campusId);
+                    String telephone = request.getParameter("tel");
+                    String photoUrl = request.getParameter("photoUrl");
+                    Utilisateur u = userServices.creeUtilisateur(nom, prenom, adresseMail, pwd, photoUrl, telephone, campus);
+                    Collection<Utilisateur> liste = userServices.getAllUsers();
+                    request.setAttribute("listeDesUsers", liste);
+                    forwardTo = "index.jsp?action=listerLesUtilisateurs";
+                    message = "Ajout d'un utilisateur";
+                    break;
+                }
+                case "updateUtilisateur": {
+                    List<Campus> campusList = campusServices.getAllCampus();
+
+                    request.setAttribute("campusList", campusList);
+                    request.setAttribute("titre", "Modifier le profils");
+                    request.setAttribute("btnLabel", "Enregister");
+
+                    String nom = request.getParameter("nom");
+                    String prenom = request.getParameter("prenom");
+                    String adresseMail = request.getParameter("adresseMail");
+                    String pwd = request.getParameter("password");
+                    Long campusId = Long.parseLong(request.getParameter("campusID"));
+                    Campus campus = campusServices.findCampusById(campusId);
+                    String telephone = request.getParameter("tel");
+                    String photoUrl = request.getParameter("photoUrl");
+                    Utilisateur u = userServices.getUserByMail(adresseMail);
+                    userServices.updateUser(u.getAdresseMail(), nom, prenom, pwd, photoUrl, telephone, campus);
+                    Collection<Utilisateur> liste = userServices.getAllUsers();
+                    request.setAttribute("listeDesUsers", liste);
+                    forwardTo = "index.jsp?action=listerLesUtilisateurs";
+                    message = "Modification de l'utilisateur " + adresseMail;
+                    break;
+                }
                 default:
                     forwardTo = "index.jsp?action=todo";
                     message = "La fonctionnalité pour le paramètre " + action + " est à implémenter !";
@@ -111,8 +119,7 @@ public class ServletUsers extends HttpServlet {
             }
         }
 
-        
-        forwardTo += (!StringUtil.isEmptyTrim(message))?"&message=" + message:"";
+        forwardTo += (!StringUtil.isEmptyTrim(message)) ? "&message=" + message : "";
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
         dp.forward(request, response);
         // Après un forward, plus rien ne peut être exécuté après !

@@ -33,7 +33,7 @@ public class CampusServices {
         return em.find(Campus.class, id);
     }
     
-    public List<Campus> gatAllCampus(){
+    public List<Campus> getAllCampus(){
         return em.createQuery("SELECT c FROM Campus c", Campus.class).getResultList();
     }
     
