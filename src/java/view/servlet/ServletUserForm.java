@@ -132,7 +132,7 @@ public class ServletUserForm extends HttpServlet {
      */
     private void addData(HttpServletRequest request){
         //Récupération de la liste des campus
-        List<Campus> campusList = campusServices.gatAllCampus();
+        List<Campus> campusList = campusServices.getAllCampus();
 
         //Ajout de la liste des campus
         request.setAttribute("campusList", campusList);

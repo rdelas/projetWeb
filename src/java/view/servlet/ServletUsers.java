@@ -93,7 +93,7 @@ public class ServletUsers extends HttpServlet {
                     List<Campus> campusList = campusServices.getAllCampus();
 
                     request.setAttribute("campusList", campusList);
-                    request.setAttribute("titre", "Modifier le profils");
+                    request.setAttribute("titre", "Modifier le profil");
                     request.setAttribute("btnLabel", "Enregister");
 
                     String nom = request.getParameter("nom");
