@@ -97,7 +97,6 @@ public class ServletUserForm extends HttpServlet {
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
         dp.forward(request, response);
     }
-
     
     private void addData(HttpServletRequest request){
         List<Campus> campusList = campusServices.getAllCampus();
@@ -106,6 +105,7 @@ public class ServletUserForm extends HttpServlet {
         request.setAttribute("titre", "S'enregister");
         request.setAttribute("btnLabel", "Enregister");
     }
+    
     /**
      * Returns a short description of the servlet.
      *
