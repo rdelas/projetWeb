@@ -62,7 +62,7 @@ public class ServletAnnonceForm extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("titre", "Ajouter une annonce");
-        request.setAttribute("btnLabel", "Ajouter");
+        request.setAttribute("btnLabel", "Ajouter"); 
         processRequest(request, response);
     }
 

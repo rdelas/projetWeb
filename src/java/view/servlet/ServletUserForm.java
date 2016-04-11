@@ -100,7 +100,7 @@ public class ServletUserForm extends HttpServlet {
 
     
     private void addData(HttpServletRequest request){
-        List<Campus> campusList = campusServices.gatAllCampus();
+        List<Campus> campusList = campusServices.getAllCampus();
 
         request.setAttribute("campusList", campusList);
         request.setAttribute("titre", "S'enregister");
