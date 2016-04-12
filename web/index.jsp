@@ -49,7 +49,7 @@
             <c:otherwise>
                 <h1>Bienvenu sur le site!</h1>
 
-                <jsp:include page="/ServletUserForm"/>
+                <jsp:include page="/ServletUserForm?action=save"/>
             </c:otherwise>    
         </c:choose>
 

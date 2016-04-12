@@ -72,7 +72,7 @@ public class ServletLogin extends HttpServlet {
             String adresseMail = request.getParameter("adresseMail");
             String password = request.getParameter("password");
 
-            if (!StringUtils.isNotBlank(adresseMail) && !StringUtils.isNotBlank(password)) {
+            if (StringUtils.isNotBlank(adresseMail) && StringUtils.isNotBlank(password)) {
                 Utilisateur user = userServices.getUserByMail(adresseMail);
                 if (user != null && userServices.checkUserPwd(user, password)) {
                     request.getSession().setAttribute("user", user);
