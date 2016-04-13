@@ -41,6 +41,10 @@ public class Annonce implements Serializable {
     
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    private TypeAnnonce type;
+    
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private CateAnnonce categorie;
     
     private String photoUrl;
@@ -64,9 +68,10 @@ public class Annonce implements Serializable {
     public Annonce() {
     }
 
-    public Annonce(String titre, String description, CateAnnonce categorie, String photoUrl, Date dateDepot, Date dateFin, Double prix, Utilisateur utilisateur) {
+    public Annonce(String titre, String description, TypeAnnonce type, CateAnnonce categorie, String photoUrl, Date dateDepot, Date dateFin, Double prix, Utilisateur utilisateur) {
         this.titre = titre;
         this.description = description;
+        this.type = type;
         this.categorie = categorie;
         this.photoUrl = photoUrl;
         this.dateDepot = dateDepot;

@@ -6,15 +6,21 @@
 package view.servlet;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
 import model.entity.bean.Utilisateur;
 import model.entity.services.UtilisateurServices;
 import org.apache.commons.lang3.StringUtils;
+import view.servlet.form.Bean;
+import view.servlet.form.LoginFormBean;
 
 /**
  *
@@ -68,17 +74,22 @@ public class ServletLogin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (request.getSession().getAttribute("user") == null) {
-            String adresseMail = request.getParameter("adresseMail");
-            String password = request.getParameter("password");
+        LoginFormBean bean = LoginFormBean.createFromRequestParameters(request.getParameterMap());
 
-            if (StringUtils.isNotBlank(adresseMail) && StringUtils.isNotBlank(password)) {
-                Utilisateur user = userServices.getUserByMail(adresseMail);
-                if (user != null && userServices.checkUserPwd(user, password)) {
-                    request.getSession().setAttribute("user", user);
-                }
+        if (!bean.validate()) {
+            Map<String, String> errors = new HashMap<>();
+            Set<ConstraintViolation<Bean>> validationErrors = bean.getErrors();
+            validationErrors.stream().forEach((error) -> {
+                errors.put(error.getPropertyPath().toString(), error.getMessage());
+            });
+            request.setAttribute("errors", errors);
+        } else {
+            Utilisateur user = userServices.getUserByMail(bean.getMail());
+            if (user != null && userServices.checkUserPwd(user, bean.getPwd())) {
+                request.getSession().setAttribute("user", user);
             }
         }
+
         processRequest(request, response);
     }
 

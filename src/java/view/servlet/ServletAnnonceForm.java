@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import model.entity.bean.Annonce;
+import model.entity.bean.CateAnnonce;
+import model.entity.bean.TypeAnnonce;
 import model.entity.bean.Utilisateur;
 import model.entity.services.AnnonceServices;
 import view.servlet.form.AnnonceFormBean;
@@ -63,6 +65,8 @@ public class ServletAnnonceForm extends HttpServlet {
             throws ServletException, IOException {
         request.setAttribute("titre", "Ajouter une annonce");
         request.setAttribute("btnLabel", "Ajouter"); 
+        request.setAttribute("types", TypeAnnonce.values());
+        request.setAttribute("categories", CateAnnonce.values());
         processRequest(request, response);
     }
 

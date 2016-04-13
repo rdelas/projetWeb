@@ -18,6 +18,8 @@
 
 <jsp:include page="/ServletUserForm?action=modify"/>  
 
+<jsp:include page="/ServletAnnonceForm"/>
+
 <jsp:include page="/ServletAnnoncePaginate" >
     <jsp:param name="listeDesAnnonces" value="${requestScope['listeDesAnnonces']}" />
 </jsp:include>

@@ -101,7 +101,6 @@ public class UtilisateurServices {
         }
 
         return (o != null) ? (Utilisateur) o : null;
-
     }
 
     public boolean checkUserPwd(final Utilisateur u, final String password) {

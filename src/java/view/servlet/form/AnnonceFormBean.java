@@ -10,6 +10,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import model.entity.bean.CateAnnonce;
+import model.entity.bean.TypeAnnonce;
 
 
 /**
@@ -22,6 +23,9 @@ public class AnnonceFormBean extends Bean {
     @Size(min = 1, max = 255, message = "Le titre ne peut pas vide")
     private String titre;
 
+    @NotNull(message = "Le type de l'annonce ne peut être null")
+    private TypeAnnonce type;
+    
     @NotNull(message = "Le prix ne peut pas être null")
     @Min(value = 0, message = "Le prix ne peut pas être inferieur à 0")
     private Double prix;
@@ -49,6 +53,14 @@ public class AnnonceFormBean extends Bean {
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+
+    public TypeAnnonce getType() {
+        return type;
+    }
+
+    public void setType(TypeAnnonce type) {
+        this.type = type;
     }
 
     public Double getPrix() {
