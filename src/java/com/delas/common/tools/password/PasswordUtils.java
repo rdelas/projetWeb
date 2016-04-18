@@ -7,6 +7,9 @@ package com.delas.common.tools.password;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.List;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  *
@@ -16,7 +19,7 @@ public class PasswordUtils {
     
     public static String encryptStringWithSalt(final String pwd, final byte[] salt) throws NoSuchAlgorithmException{
         MessageDigest md = MessageDigest.getInstance("SHA-512");
-        String encrypted = new String(md.digest(pwd.getBytes()));
+        String encrypted = new String(md.digest(ArrayUtils.addAll(salt, pwd.getBytes())));
         return encrypted;
     }
     
