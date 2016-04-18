@@ -53,6 +53,9 @@
         <c:if test="${errors['photoUrl'] != null}" >
             <p class="error" >${errors['photoUrl']}<p>
         </c:if>
+                
+        <input type="hidden" id="action" name="action" value="${action}"/><br/>
+            
         <input type="submit" value="${btnLabel}" name="submit" class="bouton"/>
     </form>
 </fieldset>

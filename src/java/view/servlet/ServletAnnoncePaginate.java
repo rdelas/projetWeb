@@ -43,7 +43,7 @@ public class ServletAnnoncePaginate extends HttpServlet {
         String pageStr = request.getParameter("page");
         String pageSizeStr = request.getParameter("pageSize");
         int page = 1, pageSize = 10;
-        if (!StringUtils.isNotBlank(pageStr)) {
+        if (StringUtils.isNotBlank(pageStr)) {
             try {
                 page = Integer.parseInt(pageStr);
             } catch (NumberFormatException e) {
@@ -51,7 +51,7 @@ public class ServletAnnoncePaginate extends HttpServlet {
             }
         }
 
-        if (!StringUtils.isNotBlank(pageSizeStr)) {
+        if (StringUtils.isNotBlank(pageSizeStr)) {
             try {
                 pageSize = Integer.parseInt(pageSizeStr);
             } catch (NumberFormatException e) {
