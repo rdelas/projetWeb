@@ -36,6 +36,10 @@
                             <input type="submit" value="Connexion" name="submit" class="bouton"/>
                         </form>
                     </div>
+
+                    <jsp:include page="/ServletAnnoncePaginate" >
+                        <jsp:param name="listeDesAnnonces" value="${requestScope['listeDesAnnonces']}" />
+                    </jsp:include>
                 </c:otherwise>
             </c:choose>
         </header>
@@ -52,11 +56,5 @@
                 <jsp:include page="/ServletUserForm?action=save"/>
             </c:otherwise>    
         </c:choose>
-
-        <c:if test="${param.action == 'listerLesAnnonces'}" >
-            <jsp:include page="liste_annonce.jsp" >
-                <jsp:param name="listeDesAnnonces" value="${requestScope['listeDesAnnonces']}" />
-            </jsp:include>
-        </c:if>
     </body>
 </html>

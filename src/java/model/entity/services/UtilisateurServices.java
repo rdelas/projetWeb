@@ -97,7 +97,7 @@ public class UtilisateurServices {
         try {
             o = q.getSingleResult();
         } catch (Exception e) {
-            System.err.println("No Result for adresse mail : " + adresseMail);
+            //System.err.println("No Result for adresse mail : " + adresseMail);
         }
 
         return (o != null) ? (Utilisateur) o : null;
