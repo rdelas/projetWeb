@@ -8,3 +8,4 @@
 <!-- Ne pas oublier cette ligne sinon tous les tags de la JSTL seront ignorés ! -->
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>

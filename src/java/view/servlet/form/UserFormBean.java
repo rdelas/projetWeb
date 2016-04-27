@@ -72,6 +72,10 @@ public class UserFormBean extends Bean {
     @Size(min = 10, max = 10, message = "Le numéro de téléphone doit comporter 10 chiffres")
     @Pattern(regexp = PHONE_PATTERN, message = "Le numéro de téléphone doit respecter le format suivant : 0[1-7][0-9]{8}")
     private String telephone;
+    
+    @NotNull
+    @Pattern(regexp = "^(save|modify){1}$", message = "L'action donnée n'est pas valide")
+    private String action;
 
     /**
      * Identifiant du campus de l'utilisateur
@@ -141,6 +145,14 @@ public class UserFormBean extends Bean {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 
     public Long getCampusId() {

@@ -4,7 +4,6 @@ import com.delas.common.tools.password.PasswordUtils;
 import com.delas.common.tools.string.StringUtil;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -61,10 +60,23 @@ public class UtilisateurServices {
 
         return q.getResultList();
     }
+    
+    public Utilisateur updateUser(final UserFormBean bean){        
+        Campus campus = campusService.findCampusById(bean.getCampusId());
+        if(campus == null){
+            return null;
+        }
+        
+        return updateUser(bean.getMail(), bean.getNom(), bean.getPrenom(), bean.getPwd(), bean.getPhotoUrl(), bean.getTelephone(), campus);
+    }
 
-    public void updateUser(final String mail, final String nom, final String prenom, final String password, final String photoUrl, final String telephone, final Campus campus) {
+    public Utilisateur updateUser(final String mail, final String nom, final String prenom, final String password, final String photoUrl, final String telephone, final Campus campus) {
 
         Utilisateur u = em.find(Utilisateur.class, mail);
+        
+        if(u == null){
+            return null;
+        }
         
         u.setFirstname(prenom);
         u.setLastname(nom);
@@ -72,6 +84,8 @@ public class UtilisateurServices {
         u.setPassword(password);
         u.setPhotoUrl(photoUrl);
         u.setTelephones(telephone);
+        
+        return u;
     }
 
     public Utilisateur getUserByMail(final String adresseMail) {
@@ -83,11 +97,10 @@ public class UtilisateurServices {
         try {
             o = q.getSingleResult();
         } catch (Exception e) {
-            System.err.println("No Result for adresse mail : " + adresseMail);
+            //System.err.println("No Result for adresse mail : " + adresseMail);
         }
 
         return (o != null) ? (Utilisateur) o : null;
-
     }
 
     public boolean checkUserPwd(final Utilisateur u, final String password) {

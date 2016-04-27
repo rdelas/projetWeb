@@ -5,7 +5,6 @@
  */
 package view.servlet;
 
-import com.delas.common.tools.object.ClassUtil;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -23,11 +22,13 @@ import model.entity.bean.Campus;
 import model.entity.bean.Utilisateur;
 import model.entity.services.CampusServices;
 import model.entity.services.UtilisateurServices;
+import org.apache.commons.lang3.StringUtils;
 import view.servlet.form.Bean;
 import view.servlet.form.UserFormBean;
 
 /**
  * Servlet gérant le formulaire d'ajout ou de modification d'utilisateur
+ *
  * @author Delas
  */
 @WebServlet(name = "ServletUserForm", urlPatterns = {"/ServletUserForm"})
@@ -50,13 +51,15 @@ public class ServletUserForm extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String action = request.getParameter("action");
         
         //ajoute des attribut nécessaire à l'affichage du formulaire
-        addData(request);
+        addData(request, action);
 
         //récupération de la JSP
         RequestDispatcher dp = request.getRequestDispatcher("includes/form_add.jsp");
-        
+
         //Gérération de la jsp avec les attributs affecté pour l'inclusion dans une page mère
         dp.include(request, response);
     }
@@ -77,44 +80,49 @@ public class ServletUserForm extends HttpServlet {
         UserFormBean bean = UserFormBean.createFromRequestParameters(request.getParameterMap());
 
         String forwardTo = "";
-        
+
         //validation du formulaire
         if (!bean.validate()) {
             //Cas du formulaire invalide
-            
+
             //Récupération de la liste des erreurs du formulaire
             Map<String, String> errors = new HashMap<>();
             Set<ConstraintViolation<Bean>> validationErrors = bean.getErrors();
-            
+
             //Boucle foreach version Java 8 (recommandé par NetBeans)
             validationErrors.stream().forEach((error) -> {
                 errors.put(error.getPropertyPath().toString(), error.getMessage());
             });
+
+            addData(request, bean.getAction());
             
             //ajout des erreur pour le traitement par la JSP
             request.setAttribute("errors", errors);
-            
+
             //remise à zéro du mot de passe et de sa confirmation
             bean.setPwd(null);
             bean.setConfirm(null);
-            
+
             //Renvoie du formulaire pour re-remplir les champs
             request.setAttribute("form", bean);
-            
+
             //Affection de la page a appeler par le RequestDispatcher
             forwardTo = "includes/form_add.jsp";
 
         } else {
 
             System.out.println("Form valid");
-            
-            //Création de l'utilisateur à l'aide du formulaire
-            Utilisateur u = userServices.creeUtilisateur(bean);
-//            System.out.println(ClassUtil.toString(u));
-            
+            boolean isModify = bean.getAction().equalsIgnoreCase("modify");
+            Utilisateur u = null;
+            if(isModify){
+                u = userServices.updateUser(bean);
+            } else {
+                //Création de l'utilisateur à l'aide du formulaire
+                u = userServices.creeUtilisateur(bean);
+            }
             //Ajout de l'utilisateur en session pour la connexion après création de compte
             request.getSession().setAttribute("user", u);
-            
+
             //Affection de la page a appeler par le RequestDispatcher
             //On fait suivre à la servlet de login qui s'occupera de faire le redirect
             forwardTo = "ServletLogin";
@@ -124,26 +132,34 @@ public class ServletUserForm extends HttpServlet {
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
         dp.forward(request, response);
     }
-    
+
     /**
      * Ajoute à la requête les attributs nécessaires à la génération de la JSP
-     * 
-     * @param request 
+     *
+     * @param request
      */
-    private void addData(HttpServletRequest request){
+    private void addData(HttpServletRequest request, String action) {
         //Récupération de la liste des campus
         List<Campus> campusList = campusServices.getAllCampus();
 
         //Ajout de la liste des campus
         request.setAttribute("campusList", campusList);
+
+        boolean isModify = StringUtils.isNotBlank(action) && action.equalsIgnoreCase("modify");
+        
+        String titre = (isModify) ? "Modifier le profil" : "S'enregistrer";
+        String btnLabel = (isModify) ? "Modifier" : "Enregistrer";
         
         //ajout du titre du fieldset
-        request.setAttribute("titre", "S'enregister");
-        
+        request.setAttribute("titre", titre);
+
         //ajout du label du bouton du formulaire
-        request.setAttribute("btnLabel", "Enregister");
+        request.setAttribute("btnLabel", btnLabel);
+        
+        //ajout du type d'action
+        request.setAttribute("action", action);
     }
-    
+
     /**
      * Returns a short description of the servlet.
      *

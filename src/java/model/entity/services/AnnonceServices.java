@@ -9,12 +9,15 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import static javafx.scene.input.KeyCode.U;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import model.entity.bean.Annonce;
 import model.entity.bean.CateAnnonce;
+import model.entity.bean.TypeAnnonce;
 import model.entity.bean.Utilisateur;
 import view.servlet.form.AnnonceFormBean;
 
@@ -27,18 +30,20 @@ public class AnnonceServices {
 
     @PersistenceContext
     private EntityManager em;
-
+    
     public Annonce creerAnnonce(AnnonceFormBean bean, Utilisateur u){
-        return creerAnnonce(bean.getTitre(), bean.getDescription(), bean.getCategorie(), bean.getPhotoUrl(), bean.getPrix(), u);
+        return creerAnnonce(bean.getTitre(), bean.getDescription(), bean.getType(), bean.getCategorie(), bean.getPhotoUrl(), bean.getPrix(), u);
     }
     
-    public Annonce creerAnnonce(final String titre, final String description, final CateAnnonce categorie, final String photoUrl, final Double prix, Utilisateur utilisateur) {
+    public Annonce creerAnnonce(final String titre, final String description, final TypeAnnonce type, final CateAnnonce categorie, final String photoUrl, final Double prix, Utilisateur utilisateur) {
         Calendar c = Calendar.getInstance();
         Date dateDepot = c.getTime();
         c.add(Calendar.MONTH, 6);
         Date dateFin = c.getTime();
+        
+        Utilisateur u = em.find(utilisateur.getClass(), utilisateur.getId());
 
-        Annonce a = new Annonce(titre, description, categorie, photoUrl, dateDepot, dateFin, prix, utilisateur);
+        Annonce a = new Annonce(titre, description, type, categorie, photoUrl, dateDepot, dateFin, prix, u);
         em.persist(a);        
         em.flush();
         return a;
