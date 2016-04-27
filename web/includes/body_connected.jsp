@@ -17,9 +17,9 @@
 </nav>
 
 <jsp:include page="/ServletUsers"/>  
-<c:if test="${param.action == 'updateUtilisateur'}" >
+<%--<c:if test="${param.action == 'updateUtilisateur'}" >--%>
     <jsp:param name="updateUtilisateur" value="${requestScope['updateUtilisateur']}" />
-</c:if>
+<%--</c:if>--%>
 
 <jsp:include page="/ServletAnnoncePaginate" >
     <jsp:param name="listeDesAnnonces" value="${requestScope['listeDesAnnonces']}" />
