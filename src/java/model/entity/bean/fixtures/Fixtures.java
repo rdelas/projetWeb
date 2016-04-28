@@ -66,42 +66,42 @@ public class Fixtures {
         Campus c5 = cSvcs.createCampus("Campus Valrose", ad5);
 
         //Chargement des étudiants
-        File f1 = new File(Fixtures.class.getResource("/csv/CFVU_Coll.USAGERS_Trotabas.csv").getFile());
-        loadFromCSV(f1, c2);
-
-        File f2 = new File(Fixtures.class.getResource("/csv/CFVU_College_Usagers_DEG_SophiaTech_initiale.csv").getFile());
-        loadFromCSV(f2, c1);
-
-        File f3 = new File(Fixtures.class.getResource("/csv/CFVU_College_Usagers_Sante_SophiaTech_initiale.csv").getFile());
-        loadFromCSV(f3, c1);
+//        File f1 = new File(Fixtures.class.getResource("/csv/CFVU_Coll.USAGERS_Trotabas.csv").getFile());
+//        loadFromCSV(f1, c2);
+//
+//        File f2 = new File(Fixtures.class.getResource("/csv/CFVU_College_Usagers_DEG_SophiaTech_initiale.csv").getFile());
+//        loadFromCSV(f2, c1);
+//
+//        File f3 = new File(Fixtures.class.getResource("/csv/CFVU_College_Usagers_Sante_SophiaTech_initiale.csv").getFile());
+//        loadFromCSV(f3, c1);
 
         File f4 = new File(Fixtures.class.getResource("/csv/CFVU_College_Usagers_SetT_SophiaTech_initiale.csv").getFile());
         loadFromCSV(f4, c1);
         
-        File f5 = new File(Fixtures.class.getResource("/csv/CFVU_College+Etudiants_+Sante_SJA_Initiale.csv").getFile());
-        loadFromCSV(f5, c3);
-        
-        File f6 = new File(Fixtures.class.getResource("/csv/CFVU_College+USAGERS_DEG_IDPD_initiale.csv").getFile());
-        loadFromCSV(f6, c2);
+//        File f5 = new File(Fixtures.class.getResource("/csv/CFVU_College+Etudiants_+Sante_SJA_Initiale.csv").getFile());
+//        loadFromCSV(f5, c3);
+//        
+//        File f6 = new File(Fixtures.class.getResource("/csv/CFVU_College+USAGERS_DEG_IDPD_initiale.csv").getFile());
+//        loadFromCSV(f6, c2);
+//
+//        File f7 = new File(Fixtures.class.getResource("/csv/CFVU_College+etudiants_SHS_Carlone_initiale.csv").getFile());
+//        loadFromCSV(f7, c4);
+//
+//        File f8 = new File(Fixtures.class.getResource("/csv/CFVU_USAGERS_Sciences_Technologies_CARLONE.csv").getFile());
+//        loadFromCSV(f8, c4);
+//
+//        File f9 = new File(Fixtures.class.getResource("/csv/CFVU_Usagers_Sante_Valrose_initialex.csv").getFile());
+//        loadFromCSV(f9, c5);
+//        
+//        File f10 = new File(Fixtures.class.getResource("/csv/CFVU_Usagers_ScTechno_Valrose_initiale-Copiex.csv").getFile());
+//        loadFromCSV(f10, c5);
 
-        File f7 = new File(Fixtures.class.getResource("/csv/CFVU_College+etudiants_SHS_Carlone_initiale.csv").getFile());
-        loadFromCSV(f7, c4);
+//        Utilisateur u1 = uSvcs.creeUtilisateur("Delas", "Romain", "r.delas01@gmail.com", "testPWD1", null, "0667760038", c1);
 
-        File f8 = new File(Fixtures.class.getResource("/csv/CFVU_USAGERS_Sciences_Technologies_CARLONE.csv").getFile());
-        loadFromCSV(f8, c4);
-
-        File f9 = new File(Fixtures.class.getResource("/csv/CFVU_Usagers_Sante_Valrose_initialex.csv").getFile());
-        loadFromCSV(f9, c5);
-        
-        File f10 = new File(Fixtures.class.getResource("/csv/CFVU_Usagers_ScTechno_Valrose_initiale-Copiex.csv").getFile());
-        loadFromCSV(f10, c5);
-
-        Utilisateur u1 = uSvcs.creeUtilisateur("Delas", "Romain", "r.delas01@gmail.com", "testPWD1", null, "0667760038", c1);
-
-        Annonce an1 = anSvcs.creerAnnonce("Vends des trucs", "Vends des trucs en test", TypeAnnonce.VENTE, CateAnnonce.VETEMENT, null, 75.5, u1);
-        Annonce an2 = anSvcs.creerAnnonce("Vend d'autres trucs", "Vends des trucs en test qui font de la musique", TypeAnnonce.VENTE, CateAnnonce.MUSIQUE, null, 2500.47, u1);
-        Annonce an3 = anSvcs.creerAnnonce("Achete des trucs", "Achete des trucs en test", TypeAnnonce.ACHAT,CateAnnonce.MEUBLE, null, 75.5, u1);
-        Annonce an4 = anSvcs.creerAnnonce("Achete d'autres trucs", "Achete des trucs en test qui sont multimédia", TypeAnnonce.ACHAT,CateAnnonce.MULTIMEDIA, null, 2500.47, u1);
+//        Annonce an1 = anSvcs.creerAnnonce("Vends des trucs", "Vends des trucs en test", TypeAnnonce.VENTE, CateAnnonce.VETEMENT, null, 75.5, u1);
+//        Annonce an2 = anSvcs.creerAnnonce("Vend d'autres trucs", "Vends des trucs en test qui font de la musique", TypeAnnonce.VENTE, CateAnnonce.MUSIQUE, null, 2500.47, u1);
+//        Annonce an3 = anSvcs.creerAnnonce("Achete des trucs", "Achete des trucs en test", TypeAnnonce.ACHAT,CateAnnonce.MEUBLE, null, 75.5, u1);
+//        Annonce an4 = anSvcs.creerAnnonce("Achete d'autres trucs", "Achete des trucs en test qui sont multimédia", TypeAnnonce.ACHAT,CateAnnonce.MULTIMEDIA, null, 2500.47, u1);
 
     }
 
