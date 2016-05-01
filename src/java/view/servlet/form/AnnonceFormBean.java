@@ -34,7 +34,7 @@ public class AnnonceFormBean extends Bean {
     private CateAnnonce categorie;
 
     @NotNull(message="La description ne peut pas être null")
-    @Size(min = 20, message="La description doit faire au moins 20 caractères")
+    @Size(min = 10, message="La description doit faire au moins 10 caractères")
     private String description;
 
     @Size(max = 255, message = "Le nom du fichier est trop long")

@@ -44,7 +44,8 @@
             <c:forEach items="${campusList}" var="campus">
                 <option value="${campus.id}">${campus.nom}</option>
             </c:forEach>
-            </option>            </select>
+            </option>            
+        </select>
         <br/>
         <c:if test="${errors['campusId'] != null}" >
             <p class="error" >${errors['campusId']}<p>

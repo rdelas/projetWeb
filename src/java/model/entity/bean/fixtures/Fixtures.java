@@ -9,15 +9,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.IntStream;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import model.entity.bean.Adresse;
-import model.entity.bean.Annonce;
 import model.entity.bean.Campus;
 import model.entity.bean.CateAnnonce;
 import model.entity.bean.TypeAnnonce;
@@ -37,7 +42,13 @@ import org.apache.commons.csv.CSVRecord;
 @Singleton
 @Startup
 public class Fixtures {
+    
+    private static final List<TypeAnnonce> TYPE_VALUES = Collections.unmodifiableList(Arrays.asList(TypeAnnonce.values()));
+            
+    private static final List<CateAnnonce> CATE_VALUES =  Collections.unmodifiableList(Arrays.asList(CateAnnonce.values()));
 
+    private static final Random RANDOM = new Random();
+    
     @EJB
     private AdresseServices adSvcs;
 
@@ -52,7 +63,8 @@ public class Fixtures {
 
     @PostConstruct
     public void initDataBase() {
-
+       
+        
         Adresse ad1 = adSvcs.createAdresse("930 Route des Colles", null, "06410", "Biot", 43.616069, 7.072132);
         Adresse ad2 = adSvcs.createAdresse("Avenue du Doyen Louis Trotabas", null, "06050", "Nice", 43.695760, 7.245440);
         Adresse ad3 = adSvcs.createAdresse("24 Avenue des Diables Bleus", null, "06357", "Nice", 43.709278, 7.288667);
@@ -96,13 +108,6 @@ public class Fixtures {
 //        File f10 = new File(Fixtures.class.getResource("/csv/CFVU_Usagers_ScTechno_Valrose_initiale-Copiex.csv").getFile());
 //        loadFromCSV(f10, c5);
 
-//        Utilisateur u1 = uSvcs.creeUtilisateur("Delas", "Romain", "r.delas01@gmail.com", "testPWD1", null, "0667760038", c1);
-
-//        Annonce an1 = anSvcs.creerAnnonce("Vends des trucs", "Vends des trucs en test", TypeAnnonce.VENTE, CateAnnonce.VETEMENT, null, 75.5, u1);
-//        Annonce an2 = anSvcs.creerAnnonce("Vend d'autres trucs", "Vends des trucs en test qui font de la musique", TypeAnnonce.VENTE, CateAnnonce.MUSIQUE, null, 2500.47, u1);
-//        Annonce an3 = anSvcs.creerAnnonce("Achete des trucs", "Achete des trucs en test", TypeAnnonce.ACHAT,CateAnnonce.MEUBLE, null, 75.5, u1);
-//        Annonce an4 = anSvcs.creerAnnonce("Achete d'autres trucs", "Achete des trucs en test qui sont multimédia", TypeAnnonce.ACHAT,CateAnnonce.MULTIMEDIA, null, 2500.47, u1);
-
     }
 
     public void loadFromCSV(File csvFile, Campus c) {
@@ -112,7 +117,11 @@ public class Fixtures {
                 CSVParser csvp = new CSVParser(fr, CSVFormat.EXCEL.withDelimiter(';').withHeader("nom", "prenom", "mail"));) {
 
             List<CSVRecord> records = csvp.getRecords();
-            records.stream().forEach((CSVRecord record) -> {
+            
+            NumberFormat formatter = new DecimalFormat("#0.00");
+            Integer max = records.size();
+            IntStream.range(0, max).forEach(index -> {
+                CSVRecord record = records.get(index);
                 String nom = record.get("nom");
                 String prenom = record.get("prenom");
                 String mail = record.get("mail");
@@ -124,7 +133,15 @@ public class Fixtures {
                     i++;
                 }
                 
-                uSvcs.creeUtilisateur(nom, prenom, mail, "password", null, null, c);
+                u = uSvcs.creeUtilisateur(nom, prenom, mail, "password", null, null, c);          
+                
+                for(int j=0; i<4; i++){
+                    
+                    TypeAnnonce type = TYPE_VALUES.get(new Random().nextInt(TYPE_VALUES.size()));
+                    anSvcs.creerAnnonce(type+" de trucs", "Lorem Ipsum", type, CATE_VALUES.get(new Random().nextInt(CATE_VALUES.size())), null, RANDOM.nextDouble()*1000, u);
+                }
+                
+                System.out.print(csvFile.getName()+ " : "+formatter.format((index/max.doubleValue())*100.0)+"%");
             });
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Fixtures.class.getName()).log(Level.SEVERE, null, ex);

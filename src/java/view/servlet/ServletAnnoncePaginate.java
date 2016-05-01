@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.entity.bean.Annonce;
+import model.entity.bean.CateAnnonce;
+import model.entity.bean.TypeAnnonce;
 import model.entity.services.AnnonceServices;
 import org.apache.commons.lang3.StringUtils;
 
@@ -39,10 +41,25 @@ public class ServletAnnoncePaginate extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         String pageStr = request.getParameter("page");
         String pageSizeStr = request.getParameter("pageSize");
+        
+        String titre = request.getParameter("titre");
+        String campusIdStr = request.getParameter("campusId");
+        String prixMinStr = request.getParameter("prixMin");
+        String prixMaxStr = request.getParameter("prixMax");
+        String typeStr = request.getParameter("type");
+        String categorieStr = request.getParameter("categorie");
+        String photoStr = request.getParameter("photo");
+        
         int page = 1, pageSize = 10;
+        Long campusId = null;
+        Double prixMin = null, prixMax = null;
+        TypeAnnonce type = null;
+        CateAnnonce categorie = null;
+        Boolean photo = null;
+        
         if (StringUtils.isNotBlank(pageStr)) {
             try {
                 page = Integer.parseInt(pageStr);
@@ -50,7 +67,6 @@ public class ServletAnnoncePaginate extends HttpServlet {
                 System.err.println("Page is not a number");
             }
         }
-
         if (StringUtils.isNotBlank(pageSizeStr)) {
             try {
                 pageSize = Integer.parseInt(pageSizeStr);
@@ -58,22 +74,44 @@ public class ServletAnnoncePaginate extends HttpServlet {
                 System.err.println("Page Size is not a number");
             }
         }
+        if(StringUtils.isNotBlank(campusIdStr)){
+            try {
+                campusId = Long.parseLong(campusIdStr);
+            } catch (NumberFormatException e) {
+                System.err.println("Campus Id is not a number");
+            }
+        }
+        if(StringUtils.isNotBlank(prixMinStr) && StringUtils.isNotBlank(prixMaxStr) ){
+            try {
+                prixMin = Double.parseDouble(prixMinStr);
+                prixMax = Double.parseDouble(prixMaxStr);
+            } catch (NumberFormatException e) {
+                System.err.println("Price range is not a number");
+            }
+        }
+        if(StringUtils.isNotBlank(typeStr)){
+            type = TypeAnnonce.valueOf(typeStr);
+        }
+        if(StringUtils.isNotBlank(categorieStr)){
+            categorie = CateAnnonce.valueOf(categorieStr);
+        }
+        if(StringUtils.isNotBlank(photoStr)){
+            photo = Boolean.parseBoolean(photoStr);
+        }
 
-        System.out.print("TEST");
-        Collection<Annonce> liste = annonceServices.getAnnoncePaginated(page, pageSize);
-        int size = annonceServices.getAllAnnonce().size();
-        int nbPage = size / pageSize + ((size % pageSize > 0) ? 1 : 0);
+//        System.out.print("TEST");
+        Collection<Annonce> liste = annonceServices.getAnnoncePaginated(page, pageSize, titre, campusId,
+                prixMin, prixMax, type, categorie, photo);
+        Long size = annonceServices.getAnnonceCountCriterized(titre, campusId,
+                prixMin, prixMax, type, categorie, photo);
+        System.out.println("Size result : "+size);
+        Long nbPage = size / pageSize + ((size % pageSize > 0) ? 1 : 0);
         request.setAttribute("listeDesAnnonces", liste);
         request.setAttribute("nbPages", nbPage);
         request.setAttribute("currentPage", page);
 
         RequestDispatcher dp = request.getRequestDispatcher("includes/liste_annonce.jsp");
         dp.include(request, response);
-//        response.setContentType(MediaType.TEXT_PLAIN);
-//        response.setHeader("Cache-Control", "no-cache");
-//        
-//        String json = new Gson().toJson(liste);
-//        response.getWriter().write(json);
     }
 
     /**

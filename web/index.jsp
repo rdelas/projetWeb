@@ -36,7 +36,7 @@
                             <input type="submit" value="Connexion" name="submit" class="bouton"/>
                         </form>
                     </div>
-
+                    <jsp:include page="/ServletAnnonceSearch"/>
                     <jsp:include page="/ServletAnnoncePaginate" >
                         <jsp:param name="listeDesAnnonces" value="${requestScope['listeDesAnnonces']}" />
                     </jsp:include>
