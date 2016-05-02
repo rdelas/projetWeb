@@ -91,7 +91,8 @@ public abstract class Bean implements Serializable {
                         if (fieldClazz.isEnum()) { //Cas d'un enum
                             //On récupère la valeur de l'enum
                             value = Enum.valueOf((Class<Enum>) field.getType(), pVal);
-                        } else if (fieldClazz.equals(Boolean.TYPE)) { //Cas d'un booleen
+                        } else if (Boolean.TYPE.isAssignableFrom(fieldClazz) 
+                                || Boolean.class.isAssignableFrom(fieldClazz)) { //Cas d'un booleen
                             value = BooleanUtils.toBooleanObject(pVal);
 
                         } else if (Number.class.isAssignableFrom(fieldClazz) && NumberUtils.isParsable(pVal)) { //Cas d'un nombre

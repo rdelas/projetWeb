@@ -48,8 +48,7 @@ public class ServletAnnonceForm extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        RequestDispatcher dp = request.getRequestDispatcher("includes/form_add_annonce.jsp");
-        dp.include(request, response);
+
     }
 
     /**
@@ -67,7 +66,8 @@ public class ServletAnnonceForm extends HttpServlet {
         request.setAttribute("btnLabel", "Ajouter"); 
         request.setAttribute("types", TypeAnnonce.values());
         request.setAttribute("categories", CateAnnonce.values());
-        processRequest(request, response);
+        RequestDispatcher dp = request.getRequestDispatcher("includes/form_add_annonce.jsp");
+        dp.include(request, response);
     }
 
     /**
@@ -96,6 +96,9 @@ public class ServletAnnonceForm extends HttpServlet {
             Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("user");
             Annonce a = annonceServices.creerAnnonce(form, utilisateur);
         }
+        
+        
+        response.sendRedirect("ServletIndex");
     }
 
     /**

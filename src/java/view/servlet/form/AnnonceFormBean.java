@@ -12,7 +12,6 @@ import javax.validation.constraints.Size;
 import model.entity.bean.CateAnnonce;
 import model.entity.bean.TypeAnnonce;
 
-
 /**
  *
  * @author rdelas
@@ -25,16 +24,16 @@ public class AnnonceFormBean extends Bean {
 
     @NotNull(message = "Le type de l'annonce ne peut être null")
     private TypeAnnonce type;
-    
+
     @NotNull(message = "Le prix ne peut pas être null")
-    @Min(value = 0, message = "Le prix ne peut pas être inferieur à 0")
+    @Min(value = 0, message = "Le prix ne peut pas être inférieur à 0")
     private Double prix;
 
     @NotNull(message = "La catégorie ne peut pas être null")
     private CateAnnonce categorie;
 
-    @NotNull(message="La description ne peut pas être null")
-    @Size(min = 10, message="La description doit faire au moins 10 caractères")
+    @NotNull(message = "La description ne peut pas être null")
+    @Size(min = 10, message = "La description doit faire au moins 10 caractères")
     private String description;
 
     @Size(max = 255, message = "Le nom du fichier est trop long")
@@ -42,8 +41,8 @@ public class AnnonceFormBean extends Bean {
 
     public AnnonceFormBean() {
     }
-    
-    public static AnnonceFormBean createFromRequestParameters(final Map<String, String[]> parameters){
+
+    public static AnnonceFormBean createFromRequestParameters(final Map<String, String[]> parameters) {
         return hydrate(parameters, AnnonceFormBean.class);
     }
 
@@ -94,5 +93,5 @@ public class AnnonceFormBean extends Bean {
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
-    
+
 }

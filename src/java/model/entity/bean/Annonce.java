@@ -49,11 +49,11 @@ public class Annonce implements Serializable {
     
     private String photoUrl;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(nullable = false)    
     private Date dateDepot;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date dateFin;
     

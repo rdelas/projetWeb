@@ -22,6 +22,7 @@ import model.entity.bean.TypeAnnonce;
 import model.entity.bean.Utilisateur;
 import org.apache.commons.lang3.StringUtils;
 import view.servlet.form.AnnonceFormBean;
+import view.servlet.form.AnnonceSearchFormBean;
 
 /**
  *
@@ -32,21 +33,21 @@ public class AnnonceServices {
 
     @PersistenceContext
     private EntityManager em;
-    
-    public Annonce creerAnnonce(AnnonceFormBean bean, Utilisateur u){
+
+    public Annonce creerAnnonce(AnnonceFormBean bean, Utilisateur u) {
         return creerAnnonce(bean.getTitre(), bean.getDescription(), bean.getType(), bean.getCategorie(), bean.getPhotoUrl(), bean.getPrix(), u);
     }
-    
+
     public Annonce creerAnnonce(final String titre, final String description, final TypeAnnonce type, final CateAnnonce categorie, final String photoUrl, final Double prix, Utilisateur utilisateur) {
         Calendar c = Calendar.getInstance();
         Date dateDepot = c.getTime();
         c.add(Calendar.MONTH, 6);
         Date dateFin = c.getTime();
-        
+
         Utilisateur u = em.find(utilisateur.getClass(), utilisateur.getId());
 
         Annonce a = new Annonce(titre, description, type, categorie, photoUrl, dateDepot, dateFin, prix, u);
-        em.persist(a);        
+        em.persist(a);
         //em.flush();
         return a;
     }
@@ -79,83 +80,99 @@ public class AnnonceServices {
         return qAnnonce.getResultList();
     }
 
-    public Collection<Annonce> getAnnoncePaginated(final int page, final int pageSize, 
+    public Collection<Annonce> getAnnoncePaginated(final AnnonceSearchFormBean form) {
+        if (form == null) {
+            return null;
+        }
+
+        return getAnnoncePaginated(form.getPage(), form.getPageSize(), form.getTitre(), form.getCampusId(),
+                form.getPrixMin(), form.getPrixMax(), form.getType(), form.getCategorie(), form.getPhoto());
+    }
+
+    public Collection<Annonce> getAnnoncePaginated(final int page, final int pageSize,
             final String titre, final Long campusId, final Double prixMin, final Double prixMax,
             final TypeAnnonce type, final CateAnnonce cate, final Boolean photo) {
-                
+
         String queryString = "select a from Annonce a";
         Query q = buildQueryWithWhereClause(queryString, titre, campusId, prixMin, prixMax, type, cate, photo)
                 .setFirstResult((page - 1) * pageSize)
                 .setMaxResults(pageSize);
- 
-        
+
         return q.getResultList();
     }
-    
+
     public Collection<Annonce> getAllAnnonceCriterized(final String titre, final Long campusId, final Double prixMin, final Double prixMax,
-            final TypeAnnonce type, final CateAnnonce cate, final Boolean photo){
-        
+            final TypeAnnonce type, final CateAnnonce cate, final Boolean photo) {
+
         String queryString = "select a from Annonce a";
         Query q = buildQueryWithWhereClause(queryString, titre, campusId, prixMin, prixMax, type, cate, photo);
-        
+
         return q.getResultList();
     }
-    
+
+    public Long getAnnonceCountCriterized(final AnnonceSearchFormBean form) {
+        if (form == null) {
+            return null;
+        }
+
+        return getAnnonceCountCriterized(form.getTitre(), form.getCampusId(), form.getPrixMin(), 
+                form.getPrixMax(), form.getType(), form.getCategorie(), form.getPhoto());
+    }
+
     public Long getAnnonceCountCriterized(final String titre, final Long campusId, final Double prixMin, final Double prixMax,
-            final TypeAnnonce type, final CateAnnonce cate, final Boolean photo){
-        
+            final TypeAnnonce type, final CateAnnonce cate, final Boolean photo) {
+
         String quetyString = "Select COUNT(a.id) from Annonce a";
         Query q = buildQueryWithWhereClause(quetyString, titre, campusId, prixMin, prixMax, type, cate, photo);
-        
-        
-        return (Long)q.getSingleResult();
+
+        return (Long) q.getSingleResult();
     }
-    
+
     private Query buildQueryWithWhereClause(final String queryString, final String titre, final Long campusId, final Double prixMin, final Double prixMax,
-            final TypeAnnonce type, final CateAnnonce cate, final Boolean photo){
-         
+            final TypeAnnonce type, final CateAnnonce cate, final Boolean photo) {
+
         // Exécution d'une requête équivalente à un select *
         String whereClause = "";
-        
-        if(StringUtils.isNotBlank(titre)){
-            whereClause += ((StringUtils.isEmpty(whereClause))?" WHERE ":" AND ") +"lower(a.titre) like :titre";
-        }        
-        if(campusId != null){            
-            whereClause += ((StringUtils.isEmpty(whereClause))?" WHERE ":" AND ") +"a.utilisateur.campus = :campus";
+
+        if (StringUtils.isNotBlank(titre)) {
+            whereClause += ((StringUtils.isEmpty(whereClause)) ? " WHERE " : " AND ") + "lower(a.titre) like :titre";
         }
-        if(prixMin != null && prixMax != null){
-            whereClause += ((StringUtils.isEmpty(whereClause))?" WHERE ":" AND ") +"a.prix BETWEEN :prixMin AND :prixMax";
+        if (campusId != null) {
+            whereClause += ((StringUtils.isEmpty(whereClause)) ? " WHERE " : " AND ") + "a.utilisateur.campus = :campus";
         }
-        if(type != null){            
-            whereClause += ((StringUtils.isEmpty(whereClause))?" WHERE ":" AND ") +"a.type = :type";
+        if (prixMin != null && prixMax != null) {
+            whereClause += ((StringUtils.isEmpty(whereClause)) ? " WHERE " : " AND ") + "a.prix BETWEEN :prixMin AND :prixMax";
         }
-        if(cate != null){            
-            whereClause += ((StringUtils.isEmpty(whereClause))?" WHERE ":" AND ") +"a.categorie = :cate";
+        if (type != null) {
+            whereClause += ((StringUtils.isEmpty(whereClause)) ? " WHERE " : " AND ") + "a.type = :type";
         }
-        if(photo != null){     
-            whereClause += ((StringUtils.isEmpty(whereClause))?" WHERE ":" AND ") +"a.photoUrl IS"+ ((photo)?" NOT ": " ") +"NULL ";
+        if (cate != null) {
+            whereClause += ((StringUtils.isEmpty(whereClause)) ? " WHERE " : " AND ") + "a.categorie = :cate";
         }
-                       
-        Query q = em.createQuery(queryString+whereClause);
-        
-        if(StringUtils.isNotBlank(titre)){
-            q.setParameter("titre", "%"+titre.trim().toLowerCase()+"%");
-        }        
-        if(campusId != null){       
+        if (photo != null) {
+            whereClause += ((StringUtils.isEmpty(whereClause)) ? " WHERE " : " AND ") + "a.photoUrl IS" + ((photo) ? " NOT " : " ") + "NULL ";
+        }
+
+        Query q = em.createQuery(queryString + whereClause);
+
+        if (StringUtils.isNotBlank(titre)) {
+            q.setParameter("titre", "%" + titre.trim().toLowerCase() + "%");
+        }
+        if (campusId != null) {
             Campus campus = em.find(Campus.class, campusId);
             q.setParameter("campus", campus);
         }
-        if(prixMin != null && prixMax != null){
+        if (prixMin != null && prixMax != null) {
             q.setParameter("prixMin", prixMin);
             q.setParameter("prixMax", prixMax);
         }
-        if(type != null){            
+        if (type != null) {
             q.setParameter("type", type);
         }
-        if(cate != null){            
+        if (cate != null) {
             q.setParameter("cate", cate);
-        }   
-        
+        }
+
         return q;
     }
 }

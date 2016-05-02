@@ -5,14 +5,36 @@
 --%>
 
 <%@include file="header.jsp" %>
-<%--<c:out value="${listeDesAnnonces}"></c:out>--%>
 <div id="list_results">
-    <table>
+    
+    <c:forEach var="a" items="${listeDesAnnonces}" varStatus="status">
+        <div id="annonce-${status.index}">
+            <h2>${a.titre}</h2>
+            <h3>
+                <fmt:formatNumber type="currency" currencySymbol="&euro;" minFractionDigits="2" maxFractionDigits="2" value="${a.prix}"/>
+            </h3>
+                
+            <p>
+                <em>
+                    <fmt:formatDate type="both" dateStyle="medium" timeStyle="short" value="${a.dateDepot}" />
+                </em>
+            </p>
+            <p><em>${a.categorie}</em></p>
+            <p><em>${a.utilisateur.campus.nom}</em></p>
+            <p>${a.description}</p>
+            
+            <a href="ServletMail">Me contacter</a>
+        </div>
+        
+    </c:forEach>
+    
+    
+<%--    <table>
         <thead>
         <th>Titre</th>
         <th>Photo</th>
         <th>Prix</th>
-        <!--<th>Université</th>-->
+        <th>Université</th>
         <th>Date de publication</th>
         </thead>
 
@@ -21,12 +43,11 @@
                 <td id="td-titre-${status.index}" class="tdTitre" >${a.titre}</td>
                 <td id="td-photo-${status.index}" class="tdPhotoUrl">${a.photoUrl}</td>
                 <td id="td-prix-${status.index}" class="tdPrix"><fmt:formatNumber type="currency" currencyCode="EUR" minFractionDigits="2" maxFractionDigits="2" value="${a.prix}"/></td>
-                <%-- <td id="td-universite-${status.index}" class="tdUniversité">${u.universite}</td> --%>
                 <td id="td-dateDepot-${status.index}" class="tdDateDepot"><fmt:formatDate type="date" value="${a.dateDepot}" /></td>
             </tr>
         </c:forEach>
 
-    </table>
+    </table>--%>
     
     <c:if test="${(nbPages-1) gt 1}" >
         <a href="#" onclick="return getAnnonceList(1);">&lt;&lt;</a>
@@ -42,5 +63,3 @@
         <a href="#" onclick="return getAnnonceList(${nbPages});">&gt;&gt;</a>
     </c:if>
 </div>
-    
-<script type="text/javascript" src="js/script.js"></script>
