@@ -135,22 +135,22 @@ public class AnnonceServices {
         String whereClause = "";
 
         if (StringUtils.isNotBlank(titre)) {
-            whereClause += ((StringUtils.isEmpty(whereClause)) ? " WHERE " : " AND ") + "lower(a.titre) like :titre";
+            whereClause += ((!StringUtils.isNotBlank(whereClause)) ? " WHERE " : " AND ") + "lower(a.titre) like :titre";
         }
         if (campusId != null) {
-            whereClause += ((StringUtils.isEmpty(whereClause)) ? " WHERE " : " AND ") + "a.utilisateur.campus = :campus";
+            whereClause += ((!StringUtils.isNotBlank(whereClause)) ? " WHERE " : " AND ") + "a.utilisateur.campus = :campus";
         }
         if (prixMin != null && prixMax != null) {
-            whereClause += ((StringUtils.isEmpty(whereClause)) ? " WHERE " : " AND ") + "a.prix BETWEEN :prixMin AND :prixMax";
+            whereClause += ((!StringUtils.isNotBlank(whereClause)) ? " WHERE " : " AND ") + "a.prix BETWEEN :prixMin AND :prixMax";
         }
         if (type != null) {
-            whereClause += ((StringUtils.isEmpty(whereClause)) ? " WHERE " : " AND ") + "a.type = :type";
+            whereClause += ((!StringUtils.isNotBlank(whereClause)) ? " WHERE " : " AND ") + "a.type = :type";
         }
         if (cate != null) {
-            whereClause += ((StringUtils.isEmpty(whereClause)) ? " WHERE " : " AND ") + "a.categorie = :cate";
+            whereClause += ((!StringUtils.isNotBlank(whereClause)) ? " WHERE " : " AND ") + "a.categorie = :cate";
         }
         if (photo != null) {
-            whereClause += ((StringUtils.isEmpty(whereClause)) ? " WHERE " : " AND ") + "a.photoUrl IS" + ((photo) ? " NOT " : " ") + "NULL ";
+            whereClause += ((!StringUtils.isNotBlank(whereClause)) ? " WHERE " : " AND ") + "a.photoUrl IS" + ((photo) ? " NOT " : " ") + "NULL ";
         }
 
         Query q = em.createQuery(queryString + whereClause);

@@ -16,6 +16,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
@@ -39,16 +40,9 @@ public abstract class Bean implements Serializable {
      * Hydrate le formulaire à l'aide de la map de paramètre. La clé correspond
      * au nom de l'attribut de la classe, et la value, à la valeur à attribuer.
      *
-     * Ne prend en compte que les formulaire ayant les champs des type suivant 
-     *  - String
-     *  - Nombre
-     *      -> Double
-     *      -> Float
-     *      -> Long
-     *      -> Integer
-     *  - Enum
-     *  - Booleen
-     * 
+     * Ne prend en compte que les formulaire ayant les champs des type suivant -
+     * String - Nombre -> Double -> Float -> Long -> Integer - Enum - Booleen
+     *
      * @param <T> Type de la classe à retourner
      * @param parameters La map des paramètres à traiter
      * @param clazz La classe de l'objet à hydrater
@@ -84,31 +78,33 @@ public abstract class Bean implements Serializable {
                     } else {
                         //Récuperation de la valeur unique
                         String pVal = paramValue[0];
+                        if (StringUtils.isNotBlank(pVal)) {
+                            //Récupération de la classe du champ à traiter
+                            Class<?> fieldClazz = Class.forName(field.getType().getCanonicalName());
 
-                        //Récupération de la classe du champ à traiter
-                        Class<?> fieldClazz = Class.forName(field.getType().getCanonicalName());
+                            if (fieldClazz.isEnum()) { //Cas d'un enum
+                                //On récupère la valeur de l'enum
+                                value = Enum.valueOf((Class<Enum>) field.getType(), pVal);
+                            } else if (Boolean.TYPE.isAssignableFrom(fieldClazz)
+                                    || Boolean.class.isAssignableFrom(fieldClazz)) { //Cas d'un booleen
+                                value = BooleanUtils.toBooleanObject(pVal);
 
-                        if (fieldClazz.isEnum()) { //Cas d'un enum
-                            //On récupère la valeur de l'enum
-                            value = Enum.valueOf((Class<Enum>) field.getType(), pVal);
-                        } else if (Boolean.TYPE.isAssignableFrom(fieldClazz) 
-                                || Boolean.class.isAssignableFrom(fieldClazz)) { //Cas d'un booleen
-                            value = BooleanUtils.toBooleanObject(pVal);
-
-                        } else if (Number.class.isAssignableFrom(fieldClazz) && NumberUtils.isParsable(pVal)) { //Cas d'un nombre
-                            //On determine le type de nombre (double, float, long, int) et on l'affecte
-                            if (Double.class.isAssignableFrom(fieldClazz)) {
-                                value = Double.parseDouble(pVal);
-                            } else if (Float.class.isAssignableFrom(fieldClazz)) {
-                                value = Float.parseFloat(pVal);
-                            } else if (Long.class.isAssignableFrom(fieldClazz)) {
-                                value = Long.parseLong(pVal);
-                            } else if (Integer.class.isAssignableFrom(fieldClazz)) {
-                                value = Integer.parseInt(pVal);
+                            } else if (Number.class.isAssignableFrom(fieldClazz) && NumberUtils.isParsable(pVal)) { //Cas d'un nombre
+                                //On determine le type de nombre (double, float, long, int) et on l'affecte
+                                if (Double.class.isAssignableFrom(fieldClazz)) {
+                                    value = Double.parseDouble(pVal);
+                                } else if (Float.class.isAssignableFrom(fieldClazz)) {
+                                    value = Float.parseFloat(pVal);
+                                } else if (Long.class.isAssignableFrom(fieldClazz)) {
+                                    value = Long.parseLong(pVal);
+                                } else if (Integer.class.isAssignableFrom(fieldClazz)) {
+                                    value = Integer.parseInt(pVal);
+                                }
+                            } else { //Cas d'un String
+                                value = pVal;
                             }
-                        } else { //Cas d'un String
-                            value = pVal;
                         }
+
                     }
                     //Affectation du champ à sa valeur
                     field.set(t, value);
