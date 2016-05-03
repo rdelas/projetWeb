@@ -11,7 +11,7 @@ and open the template in the editor.
 header {
     background-color: orange;
     padding-left: 10px;
-    padding-top: 8px;
+    padding-top: 2px;
     padding-right: 5px;
     height: 40px;
     text-align: right;
@@ -22,6 +22,7 @@ header .titre {
     font-weight: bold;
     font-size: 30px;
     font-family: sans-serif;
+    margin-top: 0px;
 }
 
 body {

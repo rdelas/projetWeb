@@ -41,6 +41,6 @@
     <label for="photo">Photo</label>
     <input type="checkbox" id="photo" name="photo">
     <br/>
-    <input type="submit" value="Rechercher"/>
+    <input type="submit" value="Rechercher" class="bouton"/>
 </form>
     

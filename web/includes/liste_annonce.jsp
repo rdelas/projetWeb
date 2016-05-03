@@ -8,7 +8,7 @@
 <div id="list_results">
     
     <c:forEach var="a" items="${listeDesAnnonces}" varStatus="status">
-        <div id="annonce-${status.index}">
+        <div id="annonce-${status.index}" class="annonce">
             <h2>${a.titre}</h2>
             <h3>
                 <fmt:formatNumber type="currency" currencySymbol="&euro;" minFractionDigits="2" maxFractionDigits="2" value="${a.prix}"/>
