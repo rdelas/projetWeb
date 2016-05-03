@@ -15,6 +15,7 @@
 </head>
 <body onload="getAnnonceList(1);">
     <header>
+        <p class="titre">Le bon coin etudiant</p>
         <c:choose>
             <c:when test="${user != null}">
 
@@ -27,7 +28,6 @@
                 </div>
             </c:when>    
             <c:otherwise>
-                <div class="titre">Le bon coin etudiant</div>
                 <div id="connexion">
                     <form action="ServletLogin" method="post" id="loginForm">
                         Adresse mail : <input type="email" name="mail" minlength="3" title="3 caracteres minimum"/>
@@ -41,9 +41,8 @@
             </c:otherwise>
         </c:choose>
     </header>
-
+    
     <c:choose>
-        <p class="titre">Le bon coin etudiant</p>
             <c:when test="${user != null}">
                 <jsp:include page="includes/body_connected.jsp">                  
                     <jsp:param name="param" value="${param}" />
