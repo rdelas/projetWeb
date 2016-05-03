@@ -7,13 +7,11 @@
 <%@include file="header.jsp" %>
 
 <nav id="menu">
-    <h2 id="titreMenu">Menu</h2>
-    <ul>
-        <li class="liMenu"><a href="">Accueil</a></li>
-        <li class="liMenu"><a href="">Ajouter une annonce</a></li>
-        <li class="liMenu"><a href="#" onclick="return getAnnonceList(1);">Voir toutes les annonces publiées</a></li>
-        <li class="liMenu"><a href="">Compte</a></li>
-    </ul>
+    <table>
+        <td class="menu"><a href="">Accueil</a></td>
+        <td class="menu"><a href="">Ajouter une annonce</a></td>
+        <td class="menu"><a href="">Compte</a></td>
+    </table>
 </nav>
 
 <jsp:include page="/ServletUserForm?action=modify"/>  
