@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import model.entity.bean.Utilisateur;
 import model.entity.services.UtilisateurServices;
-import org.apache.commons.lang3.StringUtils;
 import view.servlet.form.Bean;
 import view.servlet.form.LoginFormBean;
 

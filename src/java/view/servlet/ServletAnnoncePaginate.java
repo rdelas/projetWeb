@@ -19,11 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import model.entity.bean.Annonce;
-import model.entity.bean.CateAnnonce;
-import model.entity.bean.TypeAnnonce;
-import model.entity.bean.Utilisateur;
 import model.entity.services.AnnonceServices;
-import org.apache.commons.lang3.StringUtils;
 import view.servlet.form.AnnonceSearchFormBean;
 import view.servlet.form.Bean;
 
