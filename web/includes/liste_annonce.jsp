@@ -22,8 +22,14 @@
             <p><em>${a.categorie}</em></p>
             <p><em>${a.utilisateur.campus.nom}</em></p>
             <p>${a.description}</p>
+            <p>${a.id}</p>
+            <p>${a.encryptedId}</p>
             
-            <a href="ServletMail">Me contacter</a>
+            <c:url value="/ServletMail" var="url">
+                <c:param name="id" value="${a.encryptedId}" />
+              </c:url>
+            
+            <a href="${url}">Me contacter</a>
         </div>
         
     </c:forEach>

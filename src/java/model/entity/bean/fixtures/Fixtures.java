@@ -108,6 +108,10 @@ public class Fixtures {
 //        File f10 = new File(Fixtures.class.getResource("/csv/CFVU_Usagers_ScTechno_Valrose_initiale-Copiex.csv").getFile());
 //        loadFromCSV(f10, c5);
 
+        Utilisateur u = uSvcs.creeUtilisateur("Delas", "Romain", "r.delas01@gmail.com", "password", null, null, c1);
+        
+        anSvcs.creerAnnonce("Album JJG", "Lorem Ipsum", TypeAnnonce.VENTE, CateAnnonce.MUSIQUE, null, 50.0, u);
+                
     }
 
     public void loadFromCSV(File csvFile, Campus c) {
@@ -133,7 +137,7 @@ public class Fixtures {
                     i++;
                 }
                 
-                u = uSvcs.creeUtilisateur(nom, prenom, mail, "password", null, null, c);          
+                u = uSvcs.creeUtilisateur(nom, prenom, mail, "password", null, "0667760038", c);          
                 
                 for(int j=0; i<4; i++){
                     

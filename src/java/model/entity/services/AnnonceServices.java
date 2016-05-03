@@ -75,12 +75,12 @@ public class AnnonceServices {
         return q.getResultList();
     }
 
-    public Collection<Annonce> getAllAnnonce() {
+    public List<Annonce> getAllAnnonce() {
         Query qAnnonce = em.createQuery("select a from Annonce a");
         return qAnnonce.getResultList();
     }
 
-    public Collection<Annonce> getAnnoncePaginated(final AnnonceSearchFormBean form) {
+    public List<Annonce> getAnnoncePaginated(final AnnonceSearchFormBean form) {
         if (form == null) {
             return null;
         }
@@ -89,7 +89,7 @@ public class AnnonceServices {
                 form.getPrixMin(), form.getPrixMax(), form.getType(), form.getCategorie(), form.getPhoto());
     }
 
-    public Collection<Annonce> getAnnoncePaginated(final int page, final int pageSize,
+    public List<Annonce> getAnnoncePaginated(final int page, final int pageSize,
             final String titre, final Long campusId, final Double prixMin, final Double prixMax,
             final TypeAnnonce type, final CateAnnonce cate, final Boolean photo) {
 
@@ -101,7 +101,7 @@ public class AnnonceServices {
         return q.getResultList();
     }
 
-    public Collection<Annonce> getAllAnnonceCriterized(final String titre, final Long campusId, final Double prixMin, final Double prixMax,
+    public List<Annonce> getAllAnnonceCriterized(final String titre, final Long campusId, final Double prixMin, final Double prixMax,
             final TypeAnnonce type, final CateAnnonce cate, final Boolean photo) {
 
         String queryString = "select a from Annonce a";
@@ -115,7 +115,7 @@ public class AnnonceServices {
             return null;
         }
 
-        return getAnnonceCountCriterized(form.getTitre(), form.getCampusId(), form.getPrixMin(), 
+        return getAnnonceCountCriterized(form.getTitre(), form.getCampusId(), form.getPrixMin(),
                 form.getPrixMax(), form.getType(), form.getCategorie(), form.getPhoto());
     }
 
@@ -174,5 +174,14 @@ public class AnnonceServices {
         }
 
         return q;
+    }
+
+    public Annonce getAnnonceEncryptedIds(final String hash) {
+
+        String queryString = "select  a from Annonce a where a.encryptedId = :hash";
+
+        return (Annonce)em.createQuery(queryString)
+                .setParameter("hash", hash)
+                .getSingleResult();
     }
 }

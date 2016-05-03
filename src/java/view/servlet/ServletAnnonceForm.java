@@ -98,7 +98,7 @@ public class ServletAnnonceForm extends HttpServlet {
         }
         
         
-        response.sendRedirect("ServletIndex");
+        response.sendRedirect("index.jsp");
     }
 
     /**

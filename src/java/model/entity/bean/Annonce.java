@@ -7,7 +7,12 @@ package model.entity.bean;
 
 import com.delas.common.tools.object.ClassUtil;
 import java.io.Serializable;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +23,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 
 /**
@@ -26,44 +32,44 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class Annonce implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
+    private String encryptedId;
+
     @Column(nullable = false)
     private String titre;
-    
+
     @Lob
     @Column(nullable = false)
     private String description;
-    
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeAnnonce type;
-    
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private CateAnnonce categorie;
-    
+
     private String photoUrl;
-    
+
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    @Column(nullable = false)    
+    @Column(nullable = false)
     private Date dateDepot;
-    
+
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date dateFin;
-    
+
     @Column(nullable = false)
     private Double prix;
-    
-    @ManyToOne(cascade = {CascadeType.ALL}) 
+
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Utilisateur utilisateur;
-    
-    
 
     public Annonce() {
     }
@@ -79,8 +85,6 @@ public class Annonce implements Serializable {
         this.prix = prix;
         this.utilisateur = utilisateur;
     }
-    
-    
 
     public Long getId() {
         return id;
@@ -153,7 +157,22 @@ public class Annonce implements Serializable {
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
     }
-       
+
+    @PrePersist
+    public void load() {
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("SHA-512");
+            this.encryptedId = Base64.getEncoder().encodeToString(md.digest(id.toString().getBytes()));
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Annonce.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public String getEncryptedId() {
+        return this.encryptedId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -162,7 +181,8 @@ public class Annonce implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(Object object
+    ) {
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Annonce)) {
             return false;
@@ -176,5 +196,5 @@ public class Annonce implements Serializable {
         return ClassUtil.toString(this);
 //        return "produit.model.Produit[ id=" + id + " ]";
     }
-    
+
 }
