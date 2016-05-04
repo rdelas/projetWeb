@@ -60,7 +60,9 @@
         </c:otherwise>    
     </c:choose>
 
-    <jsp:include page="/ServletAnnonceSearch"/>
+    <div id='recherche'>
+        <jsp:include page="/ServletAnnonceSearch"/>
+    </div>
     <jsp:include page="/ServletAnnoncePaginate" >
         <jsp:param name="listeDesAnnonces" value="${requestScope['listeDesAnnonces']}" />
     </jsp:include>

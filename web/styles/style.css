@@ -112,3 +112,9 @@ a {
     border-radius: 2px;
     background: #fff;
 }
+
+#recherche {
+    padding-left: 30%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
