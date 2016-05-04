@@ -38,7 +38,7 @@
                     </form>
                 </div>
                 <div id='enregistrement' >
-                    <a href="#oModal">
+                    <a href="#oModalEnregistrementUser">
                         <input type="submit" value="S'enregistrer" name='enregistrer' class='bouton'/>
                     </a>
                 </div>
@@ -53,7 +53,7 @@
             </jsp:include>
         </c:when>
         <c:otherwise>
-            <div id='oModal' class='cModal'>
+            <div id='oModalEnregistrementUser' class='cModalEnregistrementUser'>
                 <jsp:include page="/ServletUserForm?action=save"/>
                 <a href="#" class="btn">Fermer</a>
             </div>
@@ -63,6 +63,7 @@
     <div id='recherche'>
         <jsp:include page="/ServletAnnonceSearch"/>
     </div>
+    
     <jsp:include page="/ServletAnnoncePaginate" >
         <jsp:param name="listeDesAnnonces" value="${requestScope['listeDesAnnonces']}" />
     </jsp:include>

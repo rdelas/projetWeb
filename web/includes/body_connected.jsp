@@ -8,13 +8,16 @@
 
 <nav id="menu">
     <table>
-        <td class="menu"><a href="">Accueil</a></td>
+        <td class="menu"><a href="#">Accueil</a></td>
         <td class="menu"><a href="">Ajouter une annonce</a></td>
-        <td class="menu"><a href="">Compte</a></td>
+        <td class="menu"><a href="#oModalModifUser">Compte</a></td>
     </table>
 </nav>
 
-<jsp:include page="/ServletUserForm?action=modify"/>  
+<div id='oModalModifUser' class='cModalModifUser'>
+    <jsp:include page="/ServletUserForm?action=modify"/>  
+    <a href="#" class="btn">Fermer</a>
+</div>
 
 <jsp:include page="/ServletAnnonceForm"/>
 
