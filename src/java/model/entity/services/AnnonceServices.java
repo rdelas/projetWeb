@@ -6,11 +6,8 @@
 package model.entity.services;
 
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import static javafx.scene.input.KeyCode.U;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -66,11 +63,13 @@ public class AnnonceServices {
         return em.find(Annonce.class, id);
     }
 
-    public List<Annonce> getAnnonceByUser(final Utilisateur user) {
-        String query = "Select * from Annonce a where a.utilisateur=:user;";
+    public List<Annonce> getAnnoncesByUser(final Utilisateur user) {
+        Utilisateur u = em.find(Utilisateur.class, user.getId());
+        
+        String query = "Select a from Annonce a where a.utilisateur=:user";
 
         Query q = em.createQuery(query);
-        q.setParameter("user", user);
+        q.setParameter("user", u);
 
         return q.getResultList();
     }

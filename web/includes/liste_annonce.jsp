@@ -19,14 +19,19 @@
                     <fmt:formatDate type="both" dateStyle="medium" timeStyle="short" value="${a.dateDepot}" />
                 </em>
             </p>
-            <p><em>${a.categorie}</em></p>
+            
+            <p>
+                <em>
+                    ${fn:toUpperCase(fn:substring(a.categorie, 0, 1))}${fn:toLowerCase(fn:substring(a.categorie, 1,-1))}
+                </em>
+            </p>
             <p><em>${a.utilisateur.campus.nom}</em></p>
             <p>${a.description}</p>
             <c:url value="/ServletMail" var="url">
                 <c:param name="id" value="${a.encryptedId}" />
               </c:url>
             
-            <a href="${url}">Me contacter</a>
+            <a href="${url}" class="bouton" >Me contacter</a>
         </div>
         
     </c:forEach>

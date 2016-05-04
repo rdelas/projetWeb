@@ -9,7 +9,7 @@
     <table>
         <td class="menu"><a href="index.jsp">Accueil</a></td>
         <td class="menu"><a href="creer_annonce.jsp">Ajouter une annonce</a></td>
-        <td class="menu"><a href="">Mes annonces</a></td>
+        <td class="menu"><a href="ServletMesAnnonces">Mes annonces</a></td>
         <td class="menu"><a href="mon_compte.jsp">Compte</a></td>
     </table>
 </nav>

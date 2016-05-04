@@ -139,7 +139,7 @@ public class Fixtures {
                 
                 u = uSvcs.creeUtilisateur(nom, prenom, mail, "password", null, "0667760038", c);          
                 
-                for(int j=0; i<4; i++){
+                for(int j=0; j<4; j++){
                     
                     TypeAnnonce type = TYPE_VALUES.get(new Random().nextInt(TYPE_VALUES.size()));
                     anSvcs.creerAnnonce(type+" de trucs", "Lorem Ipsum", type, CATE_VALUES.get(new Random().nextInt(CATE_VALUES.size())), null, RANDOM.nextDouble()*1000, u);

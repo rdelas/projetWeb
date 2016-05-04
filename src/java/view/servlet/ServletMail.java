@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import model.entity.bean.Annonce;
 import model.entity.bean.Utilisateur;
 import model.entity.services.AnnonceServices;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -50,12 +51,15 @@ public class ServletMail extends HttpServlet {
             throws ServletException, IOException {
 
         String id = request.getParameter("id");
-
-        Annonce a = annonceServices.getAnnonceEncryptedIds(id);
-
-        request.setAttribute("annonce", a);
-
-        RequestDispatcher dp = request.getRequestDispatcher("mail.jsp");
+        String url = "";
+        if(StringUtils.isNotBlank(id)){
+            Annonce a = annonceServices.getAnnonceEncryptedIds(id);
+            request.setAttribute("annonce", a);
+            url = "mail.jsp";
+        } else {
+            url = "index.jsp";
+        }
+        RequestDispatcher dp = request.getRequestDispatcher(url);
         dp.forward(request, response);
     }
 
@@ -94,10 +98,8 @@ public class ServletMail extends HttpServlet {
         request.setAttribute("annonce", a);
         request.getRequestDispatcher("template/mail_template.jsp").include(request, responseWrapper);
         sendMail(responseWrapper.toString(), u.getAdresseMail(), a.getUtilisateur().getAdresseMail());
-
         
-        
-        response.sendRedirect("ServletMail");
+        response.sendRedirect("index.jsp");
     }
 
     private void sendMail(String content, String from, String to) {

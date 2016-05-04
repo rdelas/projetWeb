@@ -11,6 +11,7 @@
     <label for="campusId">Campus : </label>
     <select id ="campusId" name="campusId">
         <option disabled selected hidden value="" >Votre campus</option>
+        <option value="" >Tous</option>
         <c:forEach items="${campusList}" var="campus">
             <option value="${campus.id}">${campus.nom}</option>
         </c:forEach>
@@ -32,7 +33,9 @@
     </c:forEach>
     <br/>
     <label for="categorie"> Catégorie : </label>
-    <select id="categorie" name="categorie" size="1">
+    <select id="categorie" name="categorie" size="1">        
+        <option disabled selected hidden value="" >Catégorie</option>
+        <option value="" >Toutes</option>
         <c:forEach items="${categories}" var="categorie" >
             <option value="${categorie}" >${fn:toUpperCase(fn:substring(categorie, 0, 1))}${fn:toLowerCase(fn:substring(categorie, 1,-1))}</option>
         </c:forEach>

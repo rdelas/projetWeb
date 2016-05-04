@@ -22,7 +22,7 @@
         </jsp:include>
 
         <c:if test="${user == null}" >            
-            <div id='oModal' class='cModal'>
+            <div id='oModal' class='cModalEnregistrementUser'>
                 <jsp:include page="/ServletUserForm?action=save"/>
                 <a href="#" class="btn">Fermer</a>
             </div>
