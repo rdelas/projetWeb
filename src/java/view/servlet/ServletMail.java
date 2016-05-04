@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Properties;
+import javax.ejb.EJB;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -22,6 +23,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import model.entity.bean.Annonce;
+import model.entity.bean.Utilisateur;
+import model.entity.services.AnnonceServices;
 
 /**
  *
@@ -29,6 +33,9 @@ import javax.servlet.http.HttpServletResponseWrapper;
  */
 @WebServlet(name = "ServletMail", urlPatterns = {"/ServletMail"})
 public class ServletMail extends HttpServlet {
+
+    @EJB
+    private AnnonceServices annonceServices;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -41,6 +48,13 @@ public class ServletMail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String id = request.getParameter("id");
+
+        Annonce a = annonceServices.getAnnonceEncryptedIds(id);
+
+        request.setAttribute("annonce", a);
+
         RequestDispatcher dp = request.getRequestDispatcher("mail.jsp");
         dp.forward(request, response);
     }
@@ -58,6 +72,9 @@ public class ServletMail extends HttpServlet {
             throws ServletException, IOException {
 
         String content = request.getParameter("content");
+        String id = request.getParameter("id");
+        Utilisateur u = (Utilisateur) request.getSession().getAttribute("user");
+        Annonce a = annonceServices.getAnnonceEncryptedIds(id);
 
         HttpServletResponseWrapper responseWrapper = new HttpServletResponseWrapper(response) {
             private final StringWriter sw = new StringWriter();
@@ -72,28 +89,24 @@ public class ServletMail extends HttpServlet {
                 return sw.toString();
             }
         };
-        
+
         request.setAttribute("content", content);
+        request.setAttribute("annonce", a);
         request.getRequestDispatcher("template/mail_template.jsp").include(request, responseWrapper);
-        sendMail(responseWrapper.toString());
+        sendMail(responseWrapper.toString(), u.getAdresseMail(), a.getUtilisateur().getAdresseMail());
 
         RequestDispatcher dp = request.getRequestDispatcher("mail.jsp");
         dp.forward(request, response);
     }
 
-    private void sendMail(String content) {
+    private void sendMail(String content, String from, String to) {
         /*
          * Code récupéré depuis : 
          * http://www.tutorialspoint.com/java/java_sending_email.htm
          * http://stackoverflow.com/questions/5068827/how-do-i-send-html-email-via-java
          *
          */
-        
-        // Recipient's email ID needs to be mentioned.
-        String to = "cle.chauvet@gmail.com";
 
-        // Sender's email ID needs to be mentioned
-        String from = "r.delas01@gmail.com";
 
         // Assuming you are sending email from localhost
         String host = "localhost";

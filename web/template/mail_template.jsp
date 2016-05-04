@@ -12,8 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Votre annonce à du succès!</h1>
-        <p>Vous avez été contacté pour votre annonce</p>
+        <h1>Votre annonce a du succès!</h1>
+        <p>Vous avez été contacté pour votre annonce : ${annonce.titre}</p>
         
         <div>
             ${content}
