@@ -9,7 +9,7 @@
 <nav id="menu">
     <table>
         <td class="menu"><a href="#">Accueil</a></td>
-        <td class="menu"><a href="">Ajouter une annonce</a></td>
+        <td class="menu"><a href="#oModalAjoutAnnonce">Ajouter une annonce</a></td>
         <td class="menu"><a href="#oModalModifUser">Compte</a></td>
     </table>
 </nav>
@@ -19,7 +19,10 @@
     <a href="#" class="btn">Fermer</a>
 </div>
 
-<jsp:include page="/ServletAnnonceForm"/>
+<div id='oModalAjoutAnnonce' class="cModalAjoutAnnonce">
+    <jsp:include page="/ServletAnnonceForm"/>
+    <a href="#" class="btn">Fermer</a>
+</div>
 
 <%--<jsp:include page="/ServletAnnonceSearch"/>
 <jsp:include page="/ServletAnnoncePaginate" >

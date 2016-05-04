@@ -142,3 +142,27 @@ a {
     border-radius: 2px;
     background: #fff;
 }
+
+.cModalAjoutAnnonce {
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.9);
+    opacity: 0;
+    pointer-events: none;
+}
+.cModalAjoutAnnonce:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.cModalAjoutAnnonce > div {
+    max-width: 400px;
+    position: relative;
+    margin: 10% auto;
+    padding: 8px 8px 8px 8px;
+    border-radius: 2px;
+    background: #fff;
+}
