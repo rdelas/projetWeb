@@ -11,10 +11,10 @@ and open the template in the editor.
 header {
     background-color: orange;
     padding-left: 10px;
-    padding-top: 2px;
+    padding-top: 5px;
     padding-right: 5px;
-    height: 40px;
-    text-align: right;
+    height: 50px;
+    text-align: center;
 }
 
 header .titre {
@@ -23,6 +23,20 @@ header .titre {
     font-size: 30px;
     font-family: sans-serif;
     margin-top: 0px;
+}
+
+header #enregistrement {
+    float: right;
+    padding-right: 40px;
+    padding-top: 8px;
+    text-align: center;
+}
+
+header #connexion {
+    width: 800px;
+    padding-top: 8px;
+    float: left;
+    padding-left: 70px;
 }
 
 body {
@@ -73,4 +87,28 @@ a {
 
 #menu {
     margin-bottom: 10px;
+}
+
+.cModal {
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.9);
+    opacity: 0;
+    pointer-events: none;
+}
+.cModal:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.cModal > div {
+    max-width: 400px;
+    position: relative;
+    margin: 10% auto;
+    padding: 8px 8px 8px 8px;
+    border-radius: 2px;
+    background: #fff;
 }

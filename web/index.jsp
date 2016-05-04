@@ -37,20 +37,27 @@
                         <input type="submit" value="Connexion" name="submit" class="bouton"/>
                     </form>
                 </div>
-
+                <div id='enregistrement' >
+                    <a href="#oModal">
+                        <input type="submit" value="S'enregistrer" name='enregistrer' class='bouton'/>
+                    </a>
+                </div>
             </c:otherwise>
         </c:choose>
     </header>
-    
+
     <c:choose>
-            <c:when test="${user != null}">
-                <jsp:include page="includes/body_connected.jsp">                  
-                    <jsp:param name="param" value="${param}" />
-                </jsp:include>
-            </c:when>
-            <c:otherwise>
+        <c:when test="${user != null}">
+            <jsp:include page="includes/body_connected.jsp">                  
+                <jsp:param name="param" value="${param}" />
+            </jsp:include>
+        </c:when>
+        <c:otherwise>
+            <div id='oModal' class='cModal'>
                 <jsp:include page="/ServletUserForm?action=save"/>
-            </c:otherwise>    
+                <a href="#" class="btn">Fermer</a>
+            </div>
+        </c:otherwise>    
     </c:choose>
 
     <jsp:include page="/ServletAnnonceSearch"/>
