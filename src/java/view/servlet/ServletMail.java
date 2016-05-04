@@ -95,8 +95,9 @@ public class ServletMail extends HttpServlet {
         request.getRequestDispatcher("template/mail_template.jsp").include(request, responseWrapper);
         sendMail(responseWrapper.toString(), u.getAdresseMail(), a.getUtilisateur().getAdresseMail());
 
-        RequestDispatcher dp = request.getRequestDispatcher("mail.jsp");
-        dp.forward(request, response);
+        
+        
+        response.sendRedirect("ServletMail");
     }
 
     private void sendMail(String content, String from, String to) {

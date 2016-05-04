@@ -22,9 +22,6 @@
             <p><em>${a.categorie}</em></p>
             <p><em>${a.utilisateur.campus.nom}</em></p>
             <p>${a.description}</p>
-            <p>${a.id}</p>
-            <p>${a.encryptedId}</p>
-            
             <c:url value="/ServletMail" var="url">
                 <c:param name="id" value="${a.encryptedId}" />
               </c:url>
