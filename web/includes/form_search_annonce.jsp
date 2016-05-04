@@ -6,7 +6,7 @@
 <%@include file="header.jsp" %>
 
 <form id="annonceSearchForm" method="POST" onsubmit="return getAnnonceList(1, this);">
-    <label for="titre">Titre</label><input type="text" id="titre" name="titre" />
+    <label for="titre"> Titre : </label><input type="text" id="titre" name="titre" />
     <br/>
     <label for="campusId">Campus : </label>
     <select id ="campusId" name="campusId">
